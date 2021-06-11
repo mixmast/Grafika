@@ -73,3 +73,4 @@ void GUIMyFrame1::m_right_click_on_panel( wxMouseEvent& event )
 }
 
 
+

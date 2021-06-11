@@ -35,6 +35,7 @@ class GUIMyFrame1 : public MyFrame1
 
 
 
+
 };
 
 #endif // __GUIMyFrame1__
