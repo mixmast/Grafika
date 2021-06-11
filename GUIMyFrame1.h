@@ -39,7 +39,7 @@ class GUIMyFrame1 : public MyFrame1
 
 
 
-
+		raz ddwa trzy 
 
 };
 
