@@ -34,12 +34,6 @@ class GUIMyFrame1 : public MyFrame1
 	//// end generated class members
 
 
-raz dwa trzy
-
-
-
-
-		raz ddwa trzy 
 
 };
 
