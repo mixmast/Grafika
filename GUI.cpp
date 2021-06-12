@@ -33,7 +33,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_sliderTEXT->Wrap( -1 );
 	bSizer2->Add( m_sliderTEXT, 0, wxALIGN_CENTER_HORIZONTAL|wxTOP, 5 );
 
-	m_slider = new wxSlider( this, wxID_ANY, 100, 0, 200, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
+	m_slider = new wxSlider( this, wxID_ANY, 0, -255, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
 	bSizer2->Add( m_slider, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM, 5 );
 
 	wxGridSizer* gSizer1;
@@ -94,7 +94,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_line_colourTEXT->Wrap( -1 );
 	bSizer2->Add( m_line_colourTEXT, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
 
-	m_line_colour = new wxColourPickerCtrl( this, wxID_ANY, wxColour( 0, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_line_colour = new wxColourPickerCtrl( this, wxID_ANY, wxSystemSettings::GetColour( wxSYS_COLOUR_WINDOWTEXT ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	bSizer2->Add( m_line_colour, 0, wxALL, 5 );
 
 	m_fill_colourTEXT = new wxStaticText( this, wxID_ANY, wxT("Kolor wypelnienia"), wxDefaultPosition, wxDefaultSize, 0 );

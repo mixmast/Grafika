@@ -28,10 +28,17 @@ void GUIMyFrame1::m_choosing_bacground_file(wxFileDirPickerEvent& event)
 	m_background_image_dis = image_dis;
 
 	int data_length = 3 * image_dis->GetHeight() * image_dis->GetWidth();
-	double bright_value = m_slider->GetValue() / 100.0;
+	int current = 0;
+	double bright_value = m_slider->GetValue();
 	unsigned char* image_dis_data = image_dis->GetData();
 	for (int i = 0; i < data_length; ++i) {
-		image_dis_data[i] = std::min(static_cast<int>(image_dis_data[i] * bright_value), 255);
+		current = image_dis_data[i] + bright_value;
+		if (current < 0)
+			image_dis_data[i] = 0;
+		else if (current > 255)
+			image_dis_data[i] = 255;
+		else
+			image_dis_data[i] = current;
 	}
 	m_background_bitmap = wxBitmap(*image_dis);
 
@@ -44,10 +51,18 @@ void GUIMyFrame1::m_slider_change(wxScrollEvent& event)
 
 		*m_background_image_dis = m_background_image_org->Copy();
 		int data_length = 3 * m_background_image_dis->GetHeight() * m_background_image_dis->GetWidth();
-		double bright_value = m_slider->GetValue() / 100.0;
+		int current = 0;
+		double bright_value = m_slider->GetValue();
 		unsigned char* image_dis_data = m_background_image_dis->GetData();
+
 		for (int i = 0; i < data_length; ++i) {
-			image_dis_data[i] = std::min(static_cast<int>(image_dis_data[i] * bright_value), 255);
+			current = image_dis_data[i] + bright_value;
+			if (current < 0)
+				image_dis_data[i] = 0;
+			else if (current > 255)
+				image_dis_data[i] = 255;
+			else
+				image_dis_data[i] = current;
 		}
 		m_background_bitmap = wxBitmap(*m_background_image_dis);
 	}
@@ -90,7 +105,7 @@ void GUIMyFrame1::m_triangle_button_clicked( wxCommandEvent& event )
 
 void GUIMyFrame1::m_fill_button_check( wxCommandEvent& event )
 {
-	
+
 }
 
 void GUIMyFrame1::m_left_click_on_panel( wxMouseEvent& event )
