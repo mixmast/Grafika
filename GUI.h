@@ -60,6 +60,7 @@ class MyFrame1 : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void m_next_frame_button_click( wxCommandEvent& event ) { event.Skip(); }
 		virtual void m_save_button_clicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void m_choosing_bacground_file( wxFileDirPickerEvent& event ) { event.Skip(); }
 		virtual void m_slider_change( wxScrollEvent& event ) { event.Skip(); }
 		virtual void m_circle_button_clicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void m_broken_line_button_clicked( wxCommandEvent& event ) { event.Skip(); }
