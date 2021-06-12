@@ -27,20 +27,7 @@ void GUIMyFrame1::m_choosing_bacground_file(wxFileDirPickerEvent& event)
 	std::shared_ptr<wxImage> image_dis(new wxImage(path_to_file));
 	m_background_image_dis = image_dis;
 
-	int data_length = 3 * image_dis->GetHeight() * image_dis->GetWidth();
-	int current = 0;
-	double bright_value = m_slider->GetValue();
-	unsigned char* image_dis_data = image_dis->GetData();
-	for (int i = 0; i < data_length; ++i) {
-		current = image_dis_data[i] + bright_value;
-		if (current < 0)
-			image_dis_data[i] = 0;
-		else if (current > 255)
-			image_dis_data[i] = 255;
-		else
-			image_dis_data[i] = current;
-	}
-	m_background_bitmap = wxBitmap(*image_dis);
+	correct_brightness(*m_background_image_dis);
 
 	paint_on_wxpanel();
 }
@@ -50,21 +37,7 @@ void GUIMyFrame1::m_slider_change(wxScrollEvent& event)
 	if (m_background_image_dis) {
 
 		*m_background_image_dis = m_background_image_org->Copy();
-		int data_length = 3 * m_background_image_dis->GetHeight() * m_background_image_dis->GetWidth();
-		int current = 0;
-		double bright_value = m_slider->GetValue();
-		unsigned char* image_dis_data = m_background_image_dis->GetData();
-
-		for (int i = 0; i < data_length; ++i) {
-			current = image_dis_data[i] + bright_value;
-			if (current < 0)
-				image_dis_data[i] = 0;
-			else if (current > 255)
-				image_dis_data[i] = 255;
-			else
-				image_dis_data[i] = current;
-		}
-		m_background_bitmap = wxBitmap(*m_background_image_dis);
+		correct_brightness(*m_background_image_dis);
 	}
 	else {
 		int level = std::min(static_cast<int>(m_slider->GetValue() / 100.0 * 255), 255);
@@ -121,6 +94,26 @@ void GUIMyFrame1::m_mouse_on_panel_moved( wxMouseEvent& event )
 void GUIMyFrame1::m_right_click_on_panel( wxMouseEvent& event )
 {
 // TODO: Implement m_right_click_on_panel
+}
+
+void GUIMyFrame1::correct_brightness(wxImage& image_to_change) {
+
+	image_to_change = image_to_change.Copy();
+	int data_length = 3 * image_to_change.GetHeight() * image_to_change.GetWidth();
+	int current = 0;
+	double bright_value = m_slider->GetValue();
+	unsigned char* image_data = image_to_change.GetData();
+
+	for (int i = 0; i < data_length; ++i) {
+		current = image_data[i] + bright_value;
+		if (current < 0)
+			image_data[i] = 0;
+		else if (current > 255)
+			image_data[i] = 255;
+		else
+			image_data[i] = current;
+	}
+	m_background_bitmap = wxBitmap(image_to_change);
 }
 
 
