@@ -94,7 +94,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_line_colourTEXT->Wrap( -1 );
 	bSizer2->Add( m_line_colourTEXT, 0, wxALIGN_CENTER_HORIZONTAL, 5 );
 
-	m_line_colour = new wxColourPickerCtrl( this, wxID_ANY, wxColour( 242, 57, 215 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_line_colour = new wxColourPickerCtrl( this, wxID_ANY, wxColour( 0, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	bSizer2->Add( m_line_colour, 0, wxALL, 5 );
 
 	m_fill_colourTEXT = new wxStaticText( this, wxID_ANY, wxT("Kolor wypelnienia"), wxDefaultPosition, wxDefaultSize, 0 );
