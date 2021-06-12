@@ -17,9 +17,45 @@ void GUIMyFrame1::m_save_button_clicked( wxCommandEvent& event )
 // TODO: Implement m_save_button_clicked
 }
 
-void GUIMyFrame1::m_slider_change( wxScrollEvent& event )
+void GUIMyFrame1::m_choosing_bacground_file(wxFileDirPickerEvent& event)
 {
-// TODO: Implement m_slider_change
+	std::string path_to_file = m_filePicker->GetPath();
+
+	std::shared_ptr<wxImage> image_org(new wxImage(path_to_file));
+	m_background_image_org = image_org;
+
+	std::shared_ptr<wxImage> image_dis(new wxImage(path_to_file));
+	m_background_image_dis = image_dis;
+
+	int data_length = 3 * image_dis->GetHeight() * image_dis->GetWidth();
+	double bright_value = m_slider->GetValue() / 100.0;
+	unsigned char* image_dis_data = image_dis->GetData();
+	for (int i = 0; i < data_length; ++i) {
+		image_dis_data[i] = std::min(static_cast<int>(image_dis_data[i] * bright_value), 255);
+	}
+	m_background_bitmap = wxBitmap(*image_dis);
+
+	paint_on_wxpanel();
+}
+
+void GUIMyFrame1::m_slider_change(wxScrollEvent& event)
+{
+	if (m_background_image_dis) {
+
+		*m_background_image_dis = m_background_image_org->Copy();
+		int data_length = 3 * m_background_image_dis->GetHeight() * m_background_image_dis->GetWidth();
+		double bright_value = m_slider->GetValue() / 100.0;
+		unsigned char* image_dis_data = m_background_image_dis->GetData();
+		for (int i = 0; i < data_length; ++i) {
+			image_dis_data[i] = std::min(static_cast<int>(image_dis_data[i] * bright_value), 255);
+		}
+		m_background_bitmap = wxBitmap(*m_background_image_dis);
+	}
+	else {
+		int level = std::min(static_cast<int>(m_slider->GetValue() / 100.0 * 255), 255);
+		m_background_color = wxColour(level, level, level);
+	}
+	paint_on_wxpanel();
 }
 
 void GUIMyFrame1::m_circle_button_clicked( wxCommandEvent& event )
@@ -54,7 +90,7 @@ void GUIMyFrame1::m_triangle_button_clicked( wxCommandEvent& event )
 
 void GUIMyFrame1::m_fill_button_check( wxCommandEvent& event )
 {
-// TODO: Implement m_fill_button_check
+	
 }
 
 void GUIMyFrame1::m_left_click_on_panel( wxMouseEvent& event )
@@ -70,6 +106,22 @@ void GUIMyFrame1::m_mouse_on_panel_moved( wxMouseEvent& event )
 void GUIMyFrame1::m_right_click_on_panel( wxMouseEvent& event )
 {
 // TODO: Implement m_right_click_on_panel
+}
+
+
+void GUIMyFrame1::paint_on_wxpanel() 
+{
+	std::shared_ptr<wxClientDC> DC(new wxClientDC(m_panel));
+
+	DC->Clear(); //Rysowanie tla wraz z jasnoscia
+	if (m_background_image_dis) {
+		DC->DrawBitmap( m_background_bitmap, 0, 0 );
+	}
+	else {
+		m_panel->SetBackgroundColour(m_background_color);
+	}
+
+
 }
 
 

@@ -33,7 +33,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_sliderTEXT->Wrap( -1 );
 	bSizer2->Add( m_sliderTEXT, 0, wxALIGN_CENTER_HORIZONTAL|wxTOP, 5 );
 
-	m_slider = new wxSlider( this, wxID_ANY, 128, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
+	m_slider = new wxSlider( this, wxID_ANY, 100, 0, 200, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
 	bSizer2->Add( m_slider, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM, 5 );
 
 	wxGridSizer* gSizer1;
@@ -130,6 +130,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	// Connect Events
 	m_nextbutton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_next_frame_button_click ), NULL, this );
 	m_save_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_save_button_clicked ), NULL, this );
+	m_filePicker->Connect( wxEVT_COMMAND_FILEPICKER_CHANGED, wxFileDirPickerEventHandler( MyFrame1::m_choosing_bacground_file ), NULL, this );
 	m_slider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MyFrame1::m_slider_change ), NULL, this );
 	m_slider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MyFrame1::m_slider_change ), NULL, this );
 	m_slider->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( MyFrame1::m_slider_change ), NULL, this );
@@ -156,6 +157,7 @@ MyFrame1::~MyFrame1()
 	// Disconnect Events
 	m_nextbutton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_next_frame_button_click ), NULL, this );
 	m_save_button->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_save_button_clicked ), NULL, this );
+	m_filePicker->Disconnect( wxEVT_COMMAND_FILEPICKER_CHANGED, wxFileDirPickerEventHandler( MyFrame1::m_choosing_bacground_file ), NULL, this );
 	m_slider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MyFrame1::m_slider_change ), NULL, this );
 	m_slider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MyFrame1::m_slider_change ), NULL, this );
 	m_slider->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( MyFrame1::m_slider_change ), NULL, this );
