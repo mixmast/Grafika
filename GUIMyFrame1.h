@@ -49,7 +49,8 @@ class GUIMyFrame1 : public MyFrame1
 		std::shared_ptr<wxImage> m_background_image_org { 0 };
 		std::shared_ptr<wxImage> m_background_image_dis { 0 };
 
-		std::vector<wxPoint> m_point_vector;
+		//do zapamietywania w biegu kolejnych punktow ksztaltu. Na koniec rysowania ksztaltu zapisac wspolrzedne do pliku txt.
+		std::vector<wxPoint> m_points_vector;
 
 		wxBitmap m_background_bitmap { wxNullBitmap };
 

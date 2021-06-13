@@ -151,7 +151,7 @@ void GUIMyFrame1::paint_on_wxpanel()
 
 	DC->Clear(); //Rysowanie tla wraz z jasnoscia
 	if (m_background_image_dis) {
-		DC->DrawBitmap( m_background_bitmap, 0, 0 );
+		DC->DrawBitmap( m_background_bitmap, 0, 0, true );
 	}
 	else {
 		m_panel->SetBackgroundColour(m_background_color);
