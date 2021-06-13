@@ -48,42 +48,70 @@ void GUIMyFrame1::m_slider_change(wxScrollEvent& event)
 
 void GUIMyFrame1::m_circle_button_clicked( wxCommandEvent& event )
 {
-// TODO: Implement m_circle_button_clicked
+	m_drawing_flag = CIRCLE + m_fill_button->IsChecked();
 }
 
 void GUIMyFrame1::m_broken_line_button_clicked( wxCommandEvent& event )
 {
-// TODO: Implement m_broken_line_button_clicked
+	m_drawing_flag = BROKEN_LINE + m_fill_button->IsChecked();
 }
 
 void GUIMyFrame1::m_curve_line_button_clicked( wxCommandEvent& event )
 {
-// TODO: Implement m_curve_line_button_clicked
+	m_drawing_flag = CURVE_LINE + m_fill_button->IsChecked();
 }
 
 void GUIMyFrame1::m_ellipse_button_clicked( wxCommandEvent& event )
 {
-// TODO: Implement m_ellipse_button_clicked
+	m_drawing_flag = ELLIPSE + m_fill_button->IsChecked();
 }
 
 void GUIMyFrame1::m_square_button_clicked( wxCommandEvent& event )
 {
-// TODO: Implement m_square_button_clicked
+	m_drawing_flag = SQUARE + m_fill_button->IsChecked();
 }
 
 void GUIMyFrame1::m_triangle_button_clicked( wxCommandEvent& event )
 {
-// TODO: Implement m_triangle_button_clicked
+	m_drawing_flag = TRIANGLE + m_fill_button->IsChecked();
 }
 
 void GUIMyFrame1::m_fill_button_check( wxCommandEvent& event )
 {
-
+	if (m_fill_button->IsChecked())
+		--m_drawing_flag;
+	else
+		++m_drawing_flag;
 }
 
 void GUIMyFrame1::m_left_click_on_panel( wxMouseEvent& event )
 {
-// TODO: Implement m_left_click_on_panel
+	switch (m_drawing_flag) {
+	case CIRCLE:
+		break;
+	case CIRCLE | FILLED:
+		break;
+	case TRIANGLE:
+		break;
+	case TRIANGLE | FILLED:
+		break;
+	case SQUARE:
+		break;
+	case SQUARE | FILLED:
+		break;
+	case ELLIPSE:
+		break;
+	case ELLIPSE | FILLED:
+		break;
+	case BROKEN_LINE:
+		break;
+	case BROKEN_LINE | FILLED:
+		break;
+	case CURVE_LINE:
+		break;
+	case CURVE_LINE | FILLED:
+		break;
+	}
 }
 
 void GUIMyFrame1::m_mouse_on_panel_moved( wxMouseEvent& event )
@@ -123,7 +151,7 @@ void GUIMyFrame1::paint_on_wxpanel()
 
 	DC->Clear(); //Rysowanie tla wraz z jasnoscia
 	if (m_background_image_dis) {
-		DC->DrawBitmap( m_background_bitmap, 0, 0 );
+		DC->DrawBitmap( m_background_bitmap, 0, 0, true );
 	}
 	else {
 		m_panel->SetBackgroundColour(m_background_color);
