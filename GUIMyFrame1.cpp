@@ -9,12 +9,12 @@ MyFrame1( parent )
 
 void GUIMyFrame1::m_next_frame_button_click( wxCommandEvent& event )
 {
-// TODO: Implement m_next_frame_button_click
+// tutaj klatka zapisana w wektorze bedzie zapisywana do txt
 }
 
 void GUIMyFrame1::m_save_button_clicked( wxCommandEvent& event )
 {
-// TODO: Implement m_save_button_clicked
+// tutaj w sumie to samo co wyzej ale bez czyszczenia tego wektora
 }
 
 void GUIMyFrame1::m_choosing_bacground_file(wxFileDirPickerEvent& event)
@@ -48,68 +48,129 @@ void GUIMyFrame1::m_slider_change(wxScrollEvent& event)
 
 void GUIMyFrame1::m_circle_button_clicked( wxCommandEvent& event )
 {
-	m_drawing_flag = CIRCLE + m_fill_button->IsChecked();
+	m_drawing_flag = CIRCLE;
 }
 
 void GUIMyFrame1::m_broken_line_button_clicked( wxCommandEvent& event )
 {
-	m_drawing_flag = BROKEN_LINE + m_fill_button->IsChecked();
+	m_drawing_flag = BROKEN_LINE;
 }
 
 void GUIMyFrame1::m_curve_line_button_clicked( wxCommandEvent& event )
 {
-	m_drawing_flag = CURVE_LINE + m_fill_button->IsChecked();
+	m_drawing_flag = CURVE_LINE;
 }
 
 void GUIMyFrame1::m_ellipse_button_clicked( wxCommandEvent& event )
 {
-	m_drawing_flag = ELLIPSE + m_fill_button->IsChecked();
+	m_drawing_flag = ELLIPSE;
 }
 
 void GUIMyFrame1::m_square_button_clicked( wxCommandEvent& event )
 {
-	m_drawing_flag = SQUARE + m_fill_button->IsChecked();
+	m_drawing_flag = SQUARE;
 }
 
 void GUIMyFrame1::m_triangle_button_clicked( wxCommandEvent& event )
 {
-	m_drawing_flag = TRIANGLE + m_fill_button->IsChecked();
+	m_drawing_flag = TRIANGLE;
 }
 
 void GUIMyFrame1::m_fill_button_check( wxCommandEvent& event )
 {
-	if (m_fill_button->IsChecked())
-		--m_drawing_flag;
-	else
-		++m_drawing_flag;
+	//czy to potrzebne?
 }
 
+/* w tej funkcji zakladam ze dochodzi do wyznaczenia poczatku prostokata i jego konca na podstawie
+dwoch punktow. Ksztalt to figura wpisana w ten prostokat. Wyjatkami sa line. Dopiero przy zapisywaniu
+do pliku tekstowego dwa punkty beda odpowiednio tlumaczonew zaleznosci od zmiennej "Kind". tutaj co 
+najwyzej by mozna je z miejsca narysowac za pomoca Draw na panelu*/
 void GUIMyFrame1::m_left_click_on_panel( wxMouseEvent& event )
 {
 	switch (m_drawing_flag) {
+
+
 	case CIRCLE:
+		if (m_first_click_flag) {
+			m_actual_shape.setKind(CIRCLE);
+			m_actual_shape.push_back(wxGetMousePosition());
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled();
+		}
+		else {
+			m_first_click_flag = 1;
+			m_actual_shape.push_back(wxGetMousePosition());
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
 		break;
-	case CIRCLE | FILLED:
-		break;
+
 	case TRIANGLE:
+
+		if (m_first_click_flag) {
+			m_actual_shape.setKind(TRIANGLE);
+			m_actual_shape.push_back(wxGetMousePosition());
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled();
+		}
+		else {
+			m_first_click_flag = 1;
+			m_actual_shape.push_back(wxGetMousePosition());
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
 		break;
-	case TRIANGLE | FILLED:
-		break;
+
 	case SQUARE:
+
+		if (m_first_click_flag) {
+			m_actual_shape.setKind(SQUARE);
+			m_actual_shape.push_back(wxGetMousePosition());
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled();
+		}
+		else {
+			m_first_click_flag = 1;
+			m_actual_shape.push_back(wxGetMousePosition());
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
 		break;
-	case SQUARE | FILLED:
-		break;
+
 	case ELLIPSE:
+
+		if (m_first_click_flag) {
+			m_actual_shape.setKind(ELLIPSE);
+			m_actual_shape.push_back(wxGetMousePosition());
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled();
+		}
+		else {
+			m_first_click_flag = 1;
+			m_actual_shape.push_back(wxGetMousePosition());
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
 		break;
-	case ELLIPSE | FILLED:
-		break;
+
 	case BROKEN_LINE:
+
+		if (m_first_click_flag) {
+			m_actual_shape.setKind(BROKEN_LINE);
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled();
+		}
+		m_actual_shape.push_back(wxGetMousePosition());
 		break;
-	case BROKEN_LINE | FILLED:
-		break;
+
 	case CURVE_LINE:
-		break;
-	case CURVE_LINE | FILLED:
+
+		if (m_first_click_flag) {
+			m_actual_shape.setKind(CURVE_LINE);
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled();
+		}
+		m_actual_shape.push_back(wxGetMousePosition());
 		break;
 	}
 }
@@ -121,7 +182,8 @@ void GUIMyFrame1::m_mouse_on_panel_moved( wxMouseEvent& event )
 
 void GUIMyFrame1::m_right_click_on_panel( wxMouseEvent& event )
 {
-// TODO: Implement m_right_click_on_panel
+	m_first_click_flag = 1;
+	m_actual_shape.clear();
 }
 
 void GUIMyFrame1::correct_brightness(wxImage& image_to_change) {
