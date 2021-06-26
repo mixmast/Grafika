@@ -23,51 +23,57 @@ public:
 	void pop_back();
 	void clear();
 
+	wxPoint& operator[] (unsigned int indeks);
+
 private:
 	bool _filled{ false };
 	int _kind_of_shape{ 0 };
 	std::vector<wxPoint> _points;
 };
 
-void Shape::setKind( int kind ) {
+inline void Shape::setKind( int kind ) {
 	_kind_of_shape = kind;
 }
 
-bool Shape::isEmpty() {
+inline bool Shape::isEmpty() {
 	return _kind_of_shape == 0;
 }
 
-bool Shape::isFilled() {
+inline bool Shape::isFilled() {
 	return _filled;
 }
 
-void Shape::setFilled() {
+inline void Shape::setFilled() {
 	_filled = true;
 }
 
-void Shape::setUnFilled() {
+inline void Shape::setUnFilled() {
 	_filled = false;
 }
 
 
-Shape::Shape(int kind_of_shape) {
+inline Shape::Shape(int kind_of_shape) {
 	_kind_of_shape = kind_of_shape;
 }
 
-int Shape::getKind() {
+inline int Shape::getKind() {
 	return _kind_of_shape;
 }
 
-void Shape::push_back(wxPoint& point){
+inline void Shape::push_back(wxPoint& point){
 	_points.push_back(point);
 }
 
-void Shape::pop_back() {
+inline void Shape::pop_back() {
 	_points.pop_back();
 }
 
-void Shape::clear() {
+inline void Shape::clear() {
 	_points.clear();
 	_filled = false;
 	_kind_of_shape = 0;
+}
+
+inline wxPoint& Shape::operator[] (unsigned int indeks) {
+	return _points[indeks];
 }
