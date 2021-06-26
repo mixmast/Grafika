@@ -78,7 +78,16 @@ void GUIMyFrame1::m_triangle_button_clicked( wxCommandEvent& event )
 
 void GUIMyFrame1::m_fill_button_check( wxCommandEvent& event )
 {
-	//czy to potrzebne?
+	if (!m_fill)
+	{
+		m_fill = true;
+		m_actual_shape.setFilled();
+	}
+	else
+	{
+		m_actual_shape.setUnFilled();
+		m_fill = false;
+	}
 }
 
 /* w tej funkcji zakladam ze dochodzi do wyznaczenia poczatku prostokata i jego konca na podstawie
@@ -307,8 +316,16 @@ void GUIMyFrame1::paint_on_wxpanel()
 		}
 		else
 			radious = sqrt(pow(m_actual_shape[0].x - m_actual_shape[1].x, 2) + pow(m_actual_shape[0].y- m_actual_shape[1].y, 2));
+		if (m_fill == false)
+			DC->SetBrush(*wxTRANSPARENT_BRUSH);
+		else
+			DC->SetBrush(m_fill_colour->GetColour());
+			
+		DC->SetPen(m_line_colour->GetColour());
 		DC->DrawCircle(m_actual_shape[0], radious);
+		
 		break;
+	case SQUARE:
 
 	default:
 		break;

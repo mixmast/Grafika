@@ -49,6 +49,7 @@ class GUIMyFrame1 : public MyFrame1
 		Shape m_actual_shape { 0 };
 		int m_drawing_flag { 0 };
 		bool m_first_click_flag { 1 };
+		bool m_fill{0};
 
 		std::string m_frame_drawing_text = { "" };
 

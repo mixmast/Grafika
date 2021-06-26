@@ -27,6 +27,8 @@
 #include <wx/checkbox.h>
 #include <wx/panel.h>
 #include <wx/frame.h>
+#include <wx/dc.h>
+#include <wx/brush.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
