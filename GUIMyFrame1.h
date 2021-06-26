@@ -60,6 +60,7 @@ class GUIMyFrame1 : public MyFrame1
 		wxColour m_background_color { 128, 128, 128 };
 
 		void paint_on_wxpanel();
+
 		void correct_brightness(wxImage& image_to_change);
 };
 
