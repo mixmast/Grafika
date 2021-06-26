@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GUIMyFrame1.h" />
+    <ClInclude Include="Shape.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GUI.cpp" />
@@ -35,7 +36,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{223ef6c2-a394-4118-a6c4-19a534a0fec0}</ProjectGuid>
     <RootNamespace>lab4</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -54,7 +55,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -94,8 +95,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\klient\Desktop\C++\biblioteki\wxWidgets-3.0.5\include\msvc;C:\Users\klient\Desktop\C++\biblioteki\wxWidgets-3.0.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\klient\Desktop\C++\biblioteki\wxWidgets-3.0.5\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Administrator\Desktop\C++\wxWidgets-3.0.5\include\msvc;C:\Users\Administrator\Desktop\C++\wxWidgets-3.0.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Administrator\Desktop\C++\wxWidgets-3.0.5\lib\vc_x64_lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
