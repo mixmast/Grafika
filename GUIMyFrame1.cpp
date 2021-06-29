@@ -257,7 +257,8 @@ void GUIMyFrame1::m_right_click_on_panel( wxMouseEvent& event )
 
 	case BROKEN_LINE:
 	case CURVE_LINE:
-		m_shapes.push_back(m_actual_shape);
+		if(*m_actual_shape)
+			m_shapes.push_back(m_actual_shape);
 		m_first_click_flag = true;
 		m_actual_shape.clear();
 		break;

@@ -24,6 +24,7 @@ public:
 	void clear();
 
 	wxPoint& operator[] (unsigned int indeks);
+	operator bool();
 
 private:
 	bool _filled{ false };
@@ -77,3 +78,4 @@ inline void Shape::clear() {
 inline wxPoint& Shape::operator[] (unsigned int indeks) {
 	return _points[indeks];
 }
+
