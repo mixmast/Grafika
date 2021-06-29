@@ -236,14 +236,24 @@ void GUIMyFrame1::m_left_click_on_panel( wxMouseEvent& event )
 		if (m_first_click_flag) {
 			m_first_click_flag = false;
 			m_actual_shape.setKind(CURVE_LINE);
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
 			if (m_fill_button->IsChecked())
 				m_actual_shape.setFilled();
 		}
-		
-		mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-		mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-		m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+		else {
+			m_first_click_flag = true;
 
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
 		break;
 	}
 }
@@ -264,19 +274,13 @@ void GUIMyFrame1::m_right_click_on_panel( wxMouseEvent& event )
 	case SQUARE:
 	case ELLIPSE:
 	case BROKEN_LINE:
+	case CURVE_LINE:
 		m_first_click_flag = true;
 		m_actual_shape.clear();
 		paint_on_wxpanel();
 		break;
 
-	case CURVE_LINE:
-		if( m_actual_shape )
-			m_shapes.push_back(m_actual_shape);
-		
-		m_first_click_flag = true;
-		m_actual_shape.clear();
-		paint_on_wxpanel();
-		break;
+	
 
 	default:
 		break;
@@ -420,8 +424,9 @@ void GUIMyFrame1::paint_on_wxpanel()
 		}
 
 		DC->SetPen(m_line_colour->GetColour());
+		
 
-		DC->DrawLine(m_actual_shape[0].x, m_actual_shape[0].y, mouseX, mouseY);
+		DC->DrawSpline(m_actual_shape[0].x, m_actual_shape[0].y, mouseX, mouseY, m_actual_shape[1].x, m_actual_shape[1].y);
 		break;
 	default:
 		break;
