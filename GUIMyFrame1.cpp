@@ -104,107 +104,118 @@ m_fill = false;
 }
 }
 
-void GUIMyFrame1::m_left_click_on_panel( wxMouseEvent& event )
+void GUIMyFrame1::m_left_click_on_panel(wxMouseEvent& event)
 {
 
-int mouseY;
-int mouseX;
+	int mouseY;
+	int mouseX;
 
-switch (m_drawing_flag) {
-
-
-case CIRCLE:
-if (m_first_click_flag) {
-
-m_first_click_flag = false;
-m_actual_shape.setKind(CIRCLE);
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled();
-}
-else {
-m_first_click_flag = true;
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-m_shapes.push_back(m_actual_shape);
-m_actual_shape.clear();
-}
-break;
-
-case TRIANGLE:
-
-if (m_first_click_flag) {
-
-m_first_click_flag = false;
-m_actual_shape.setKind(TRIANGLE);
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled();
-}
-else {
-m_first_click_flag = true;
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-m_shapes.push_back(m_actual_shape);
-m_actual_shape.clear();
-}
-break;
-
-case SQUARE:
-
-if (m_first_click_flag) {
-m_first_click_flag = false;
-m_actual_shape.setKind(SQUARE);
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled();
-}
-else {
-m_first_click_flag = true;
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-m_shapes.push_back(m_actual_shape);
-m_actual_shape.clear();
-}
-break;
-
-case ELLIPSE:
-
-if (m_first_click_flag) {
-m_first_click_flag = false;
-m_actual_shape.setKind(ELLIPSE);
+	switch (m_drawing_flag) {
 
 
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+	case CIRCLE:
+		if (m_first_click_flag) {
 
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled();
-}
-else {
-m_first_click_flag = true;
+			m_first_click_flag = false;
+			m_actual_shape.setKind(CIRCLE);
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled();
+		}
+		else {
+			m_first_click_flag = true;
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
+		break;
+
+	case TRIANGLE:
+
+		if (m_first_click_flag) {
+
+			m_first_click_flag = false;
+			m_actual_shape.setKind(TRIANGLE);
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled();
+		}
+		else {
+			m_first_click_flag = true;
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
+		break;
+
+	case SQUARE:
+
+		if (m_first_click_flag) {
+			m_first_click_flag = false;
+			m_actual_shape.setKind(SQUARE);
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled();
+		}
+		else {
+			m_first_click_flag = true;
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
+		break;
+
+	case ELLIPSE:
+
+		if (m_first_click_flag) {
+			m_first_click_flag = false;
+			m_actual_shape.setKind(ELLIPSE);
+
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled();
+		}
+		else {
+			m_first_click_flag = true;
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
+		break;
+
+	case BROKEN_LINE:
 
 		if (m_first_click_flag) {
 			m_first_click_flag = false;
@@ -229,46 +240,31 @@ m_first_click_flag = true;
 		}
 		break;
 
+	case CURVE_LINE:
 
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+		if (m_first_click_flag) {
+			m_first_click_flag = false;
+			m_actual_shape.setKind(CURVE_LINE);
 
-m_shapes.push_back(m_actual_shape);
-m_actual_shape.clear();
-}
-break;
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
 
-case BROKEN_LINE:
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled();
+		}
+		else {
+			m_first_click_flag = true;
 
-if (m_first_click_flag) {
-m_first_click_flag = false;
-m_actual_shape.setKind(BROKEN_LINE);
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled();
-}
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
 
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-break;
-
-case CURVE_LINE:
-
-if (m_first_click_flag) {
-m_first_click_flag = false;
-m_actual_shape.setKind(CURVE_LINE);
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled();
-}
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-break;
-}
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
+		break;
+	}
 }
 
 void GUIMyFrame1::m_mouse_on_panel_moved( wxMouseEvent& event )
@@ -294,13 +290,7 @@ void GUIMyFrame1::m_right_click_on_panel(wxMouseEvent& event)
 		paint_on_wxpanel();
 		break;
 
-	case CURVE_LINE:
-		if (m_actual_shape)
-			m_shapes.push_back(m_actual_shape);
-
-		m_first_click_flag = true;
-		m_actual_shape.clear();
-		paint_on_wxpanel();
+	default:
 		break;
 	}
 
