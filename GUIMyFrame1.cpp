@@ -288,6 +288,7 @@ void GUIMyFrame1::m_right_click_on_panel(wxMouseEvent& event)
 	case SQUARE:
 	case ELLIPSE:
 	case BROKEN_LINE:
+	case CURVE_LINE:
 		m_first_click_flag = true;
 		m_actual_shape.clear();
 		paint_on_wxpanel();
@@ -442,8 +443,9 @@ void GUIMyFrame1::paint_on_wxpanel()
 		}
 
 		DC->SetPen(m_line_colour->GetColour());
+		
 
-		DC->DrawLine(m_actual_shape[0].x, m_actual_shape[0].y, mouseX, mouseY);
+		DC->DrawSpline(m_actual_shape[0].x, m_actual_shape[0].y, mouseX, mouseY, m_actual_shape[1].x, m_actual_shape[1].y);
 		break;
 	default:
 		break;
