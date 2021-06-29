@@ -195,7 +195,7 @@ if (m_first_click_flag) {
 m_first_click_flag = false;
 m_actual_shape.setKind(ELLIPSE);
 
-<<<<<<< HEAD
+
 mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
 mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
 m_actual_shape.push_back(wxPoint(mouseX, mouseY));
@@ -228,7 +228,7 @@ m_first_click_flag = true;
 			m_actual_shape.clear();
 		}
 		break;
->>>>>>> 8fdf3c0a281c0454158849b2f6427009c6ad8dad
+
 
 mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
 mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
@@ -278,31 +278,9 @@ paint_on_wxpanel();
 
 }
 
-void GUIMyFrame1::m_right_click_on_panel( wxMouseEvent& event )
+void GUIMyFrame1::m_right_click_on_panel(wxMouseEvent& event)
 {
-<<<<<<< HEAD
-switch (m_drawing_flag) {
 
-case CIRCLE:
-case TRIANGLE:
-case SQUARE:
-case ELLIPSE:
-m_first_click_flag = true;
-m_actual_shape.clear();
-break;
-
-case BROKEN_LINE:
-case CURVE_LINE:
-if( m_actual_shape )
-m_shapes.push_back(m_actual_shape);
-m_first_click_flag = true;
-m_actual_shape.clear();
-break;
-
-default:
-break;
-}
-=======
 	switch (m_drawing_flag) {
 
 	case CIRCLE:
@@ -316,14 +294,14 @@ break;
 		break;
 
 	case CURVE_LINE:
-		if( m_actual_shape )
+		if (m_actual_shape)
 			m_shapes.push_back(m_actual_shape);
-		
+
 		m_first_click_flag = true;
 		m_actual_shape.clear();
 		paint_on_wxpanel();
 		break;
->>>>>>> 8fdf3c0a281c0454158849b2f6427009c6ad8dad
+	}
 
 }
 
@@ -472,38 +450,7 @@ void GUIMyFrame1::paint_on_wxpanel()
 	}
 }
 
-void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC) 
-{
-	for (auto shape : m_shapes) {
-		switch (shape.getKind()) {
 
-		case CIRCLE:
-
-			double radious;
-			radious = sqrt(pow(shape[0].x - shape[1].x, 2) + pow(shape[0].y - shape[1].y, 2));
-			DC->DrawCircle(shape[0], radious);
-			break;
-
-		case SQUARE:
-
-			double d;
-			d = std::max(shape[1].x - shape[0].x, shape[1].y - shape[0].y);
-			DC->DrawRectangle(shape[0].x, shape[0].y, d, d);
-
-			break;
-		case ELLIPSE:
-
-			double f, g;
-			f = shape[1].x - shape[0].x;
-			g = shape[1].y - shape[0].y;
-			DC->DrawEllipse(shape[0].x, shape[0].y, f, g);
-			break;
-
-		default:
-			break;
-		}
-	}
-}
 
 void GUIMyFrame1::save_vector_to_file() 
 {
@@ -545,7 +492,6 @@ void GUIMyFrame1::save_vector_to_file()
 	}
 }
 
-<<<<<<< HEAD
 void GUIMyFrame1::reset_bitmap_buttons() {
 	m_circle_button->SetBitmap(wxBitmap(wxT("ikony/okrag.png"), wxBITMAP_TYPE_ANY));
 	m_broken_line_button->SetBitmap(wxBitmap(wxT("ikony/lamana.png"), wxBITMAP_TYPE_ANY));
@@ -553,7 +499,8 @@ void GUIMyFrame1::reset_bitmap_buttons() {
 	m_ellipse_button->SetBitmap(wxBitmap(wxT("ikony/elipsa.png"), wxBITMAP_TYPE_ANY));
 	m_square_button->SetBitmap(wxBitmap(wxT("ikony/kwadrat.png"), wxBITMAP_TYPE_ANY));
 	m_triangle_button->SetBitmap(wxBitmap(wxT("ikony/trojkat.png"), wxBITMAP_TYPE_ANY));
-=======
+}
+
 void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC) {
 	wxPoint tab[3];
 	for (auto shape : m_shapes) {
@@ -600,5 +547,4 @@ void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC) {
 			break;
 		}
 	}
->>>>>>> 8fdf3c0a281c0454158849b2f6427009c6ad8dad
 }
