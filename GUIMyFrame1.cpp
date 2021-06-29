@@ -293,15 +293,6 @@ void GUIMyFrame1::m_right_click_on_panel(wxMouseEvent& event)
 		m_actual_shape.clear();
 		paint_on_wxpanel();
 		break;
-
-	case CURVE_LINE:
-		if (m_actual_shape)
-			m_shapes.push_back(m_actual_shape);
-
-		m_first_click_flag = true;
-		m_actual_shape.clear();
-		paint_on_wxpanel();
-		break;
 	}
 
 }
