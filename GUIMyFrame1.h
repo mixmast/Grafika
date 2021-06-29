@@ -42,7 +42,7 @@ class GUIMyFrame1 : public MyFrame1
 	//// end generated class members
 
 	protected:
-		
+
 		std::vector<Shape> m_shapes; // cala klatka tu jest zapisana
 		Shape m_actual_shape { 0 };
 		int m_drawing_flag { 0 };
@@ -61,7 +61,14 @@ class GUIMyFrame1 : public MyFrame1
 		void paint_on_wxpanel();
 		void draw_vector_with_dc(std::shared_ptr<wxClientDC> DC);
 		void save_vector_to_file();
+		void reset_bitmap_buttons();
 		void correct_brightness(wxImage& image_to_change);
+
+
+
+
+
+
 };
 
 #endif // __GUIMyFrame1__
