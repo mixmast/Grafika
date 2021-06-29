@@ -1,92 +1,9 @@
-#ifndef _SHAPE_
-#define _SHAPE_
-
-#include <wx/gdicmn.h>
 #include <vector>
-#include <string>
-
-//kazdy kontener ksztalt to typ i lista punktow wiec tu jest taki uniwersalny kontener na kazdy z nich
-enum SHAPES_FLAG { CIRCLE = 100, TRIANGLE = 110, SQUARE = 120, ELLIPSE = 130, BROKEN_LINE = 140, CURVE_LINE = 150 };
-
-class Shape {
-
-public:
-	Shape(int kind_of_shape = 0);
-	
-	int getKind();
-	void setKind( int kind );
-	bool isEmpty();
-	
-	bool isFilled();
-	void setFilled();
-	void setUnFilled();
-
-	void push_back(wxPoint& point);
-	void pop_back();
-	void clear();
-	std::string txt_code();
-
-	wxPoint& operator[] (unsigned int indeks);
-	operator bool();
-
-private:
-	bool _filled{ false };
-	int _kind_of_shape{ 0 };
-	std::vector<wxPoint> _points;
-};
-
-inline void Shape::setKind( int kind ) {
-	_kind_of_shape = kind;
-}
-
-inline bool Shape::isEmpty() {
-	return _kind_of_shape == 0;
-}
-
-inline bool Shape::isFilled() {
-	return _filled;
-}
-
-inline void Shape::setFilled() {
-	_filled = true;
-}
-
-inline void Shape::setUnFilled() {
-	_filled = false;
-}
+#include <algorithm>
+#include "Shape.h"
 
 
-inline Shape::Shape(int kind_of_shape) {
-	_kind_of_shape = kind_of_shape;
-}
-
-inline int Shape::getKind() {
-	return _kind_of_shape;
-}
-
-inline void Shape::push_back(wxPoint& point){
-	_points.push_back(point);
-}
-
-inline void Shape::pop_back() {
-	_points.pop_back();
-}
-
-inline void Shape::clear() {
-	_points.clear();
-	_filled = false;
-	_kind_of_shape = 0;
-}
-
-inline wxPoint& Shape::operator[] (unsigned int indeks) {
-	return _points[indeks];
-}
-
-inline  Shape::operator bool() {
-	return _points.size() > 1;
-}
-
-inline std::string Shape::txt_code() {
+std::string Shape::txt_code() {
 
 	double r = 0;
 	int a = 0;
@@ -104,7 +21,6 @@ inline std::string Shape::txt_code() {
 		shape_code += std::to_string(static_cast<int>(_points[0].x + r)) + " " + std::to_string(static_cast<int>(_points[0].y + r));
 		shape_code += " ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x + r)) + " " + std::to_string(static_cast<int>(_points[0].y - r));
-		shape_code += "     ";
 		break;
 
 	case SQUARE:
@@ -117,7 +33,6 @@ inline std::string Shape::txt_code() {
 		shape_code += std::to_string(static_cast<int>(_points[1].x)) + " " + std::to_string(static_cast<int>(_points[1].y));
 		shape_code += " ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x)) + " " + std::to_string(static_cast<int>(_points[0].y - a));
-		shape_code += "     ";
 		break;
 
 	case ELLIPSE:
@@ -130,7 +45,6 @@ inline std::string Shape::txt_code() {
 		shape_code += std::to_string(static_cast<int>(_points[1].x)) + " " + std::to_string(static_cast<int>(_points[1].y));
 		shape_code += " ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x)) + " " + std::to_string(static_cast<int>(_points[0].y - a));
-		shape_code += "     ";
 		break;
 
 	case TRIANGLE:
@@ -139,7 +53,6 @@ inline std::string Shape::txt_code() {
 			shape_code += std::to_string(static_cast<int>(_points[i].x)) + " " + std::to_string(static_cast<int>(_points[i].y));
 			shape_code += " ";
 		}
-		shape_code += "     ";
 		break;
 
 	case CURVE_LINE:
@@ -148,7 +61,6 @@ inline std::string Shape::txt_code() {
 			shape_code += std::to_string(static_cast<int>(point.x)) + " " + std::to_string(static_cast<int>(point.y));
 			shape_code += " ";
 		}
-		shape_code += "     ";
 		break;
 
 	case BROKEN_LINE:
@@ -157,7 +69,6 @@ inline std::string Shape::txt_code() {
 			shape_code += std::to_string(static_cast<int>(point.x)) + " " + std::to_string(static_cast<int>(point.y));
 			shape_code += " ";
 		}
-		shape_code += "     ";
 		break;
 
 	default:
@@ -166,5 +77,3 @@ inline std::string Shape::txt_code() {
 
 	return shape_code;
 }
-
-#endif // _SHAPE_

@@ -9,12 +9,14 @@ MyFrame1( parent )
 
 void GUIMyFrame1::m_next_frame_button_click( wxCommandEvent& event )
 {
-// tutaj klatka zapisana w wektorze bedzie zapisywana do txt
+	save_vector_to_file();
+	m_shapes.clear();
+	paint_on_wxpanel();
 }
 
 void GUIMyFrame1::m_save_button_clicked( wxCommandEvent& event )
 {
-// tutaj w sumie to samo co wyzej ale bez czyszczenia tego wektora
+	save_vector_to_file();
 }
 
 void GUIMyFrame1::m_choosing_bacground_file(wxFileDirPickerEvent& event)
@@ -361,6 +363,45 @@ void GUIMyFrame1::paint_on_wxpanel()
 		break;
 	default:
 		break;
+	}
+}
+
+void GUIMyFrame1::save_vector_to_file() {
+
+	std::fstream plik;
+	std::string tekst;
+	std::string first_line;
+	std::string temp_line;
+	std::string save_line = "";
+	std::vector<std::string> lines;
+	int frames{0};
+	plik.open("Animation.txt", std::ios::in);
+
+	if (plik.good()) {
+		
+		getline(plik, first_line);
+		frames = stoi(first_line);
+
+		while (getline(plik, temp_line)) {
+			lines.push_back(temp_line);
+		}
+	}
+	plik.close();
+
+	for (auto shape : m_shapes) {
+		save_line += shape.txt_code();
+	}
+	save_line += "\n";
+
+	++frames;
+	lines.push_back(save_line);
+
+	plik.open("Animation.txt", std::ios::out);
+
+	if (plik.good()) {
+		plik << frames << std::endl;
+		for (auto line : lines)
+			plik << line << std::endl;
 	}
 }
 
