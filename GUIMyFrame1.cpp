@@ -292,13 +292,13 @@ void GUIMyFrame1::correct_brightness(wxImage& image_to_change) {
 void GUIMyFrame1::paint_on_wxpanel() 
 {
 	std::shared_ptr<wxClientDC> DC(new wxClientDC(m_panel));
-	wxSize diagonal;
-	DC->Clear(); //Rysowanie tla wraz z jasnoscia
+	
+	DC->Clear();
 	if (m_background_image_dis) {
 		DC->DrawBitmap( m_background_bitmap, 0, 0, true );
 	}
 	else {
-		m_panel->SetBackgroundColour(m_background_color);
+		m_panel->SetBackgroundColour(wxColour(*wxWHITE));
 	}
 
 	int mouseX;
@@ -358,9 +358,53 @@ void GUIMyFrame1::paint_on_wxpanel()
 
 		DC->DrawEllipse(m_actual_shape[0].x, m_actual_shape[0].y,f, g);
 		break;
+
+	case TRIANGLE:
+
+		
+		if (m_first_click_flag == false) {
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+			
+			
+		}
+		
+		DC->DrawSpline(m_actual_shape[0].x, m_actual_shape[0].y, m_actual_shape[1].x, m_actual_shape[1].y, m_actual_shape[2].x, m_actual_shape[2].y);
+		
+		break;
+	case BROKEN_LINE:
+
+
+		if (m_first_click_flag == false) {
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+
+		}
+
+		DC->DrawSpline(m_actual_shape[0].x, m_actual_shape[0].y, m_actual_shape[1].x, m_actual_shape[1].y, m_actual_shape[2].x, m_actual_shape[2].y);
+
+		break;
+	case CURVE_LINE:
+
+
+		if (m_first_click_flag == false) {
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+
+		}
+
+		DC->DrawSpline(m_actual_shape[0].x, m_actual_shape[0].y, m_actual_shape[1].x, m_actual_shape[1].y, m_actual_shape[2].x, m_actual_shape[2].y);
+
+		break;
 	default:
 		break;
 	}
+	
 }
 
 

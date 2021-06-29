@@ -22,6 +22,7 @@ public:
 	void push_back(wxPoint& point);
 	void pop_back();
 	void clear();
+	
 
 	wxPoint& operator[] (unsigned int indeks);
 
@@ -77,3 +78,4 @@ inline void Shape::clear() {
 inline wxPoint& Shape::operator[] (unsigned int indeks) {
 	return _points[indeks];
 }
+
