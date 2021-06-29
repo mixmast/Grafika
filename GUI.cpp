@@ -42,6 +42,10 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_circle_button = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
 	m_circle_button->SetBitmap( wxBitmap( wxT("ikony/okrag.png"), wxBITMAP_TYPE_ANY ) );
+	m_circle_button->SetBitmapDisabled( wxBitmap( wxT("ikony/okrag_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_circle_button->SetBitmapPressed( wxBitmap( wxT("ikony/okrag_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_circle_button->SetBitmapFocus( wxBitmap( wxT("ikony/okrag_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_circle_button->SetBitmapCurrent( wxBitmap( wxT("ikony/okrag_s.png"), wxBITMAP_TYPE_ANY ) );
 	m_circle_button->SetMinSize( wxSize( 40,40 ) );
 	m_circle_button->SetMaxSize( wxSize( 40,40 ) );
 
@@ -50,6 +54,9 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_broken_line_button = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
 	m_broken_line_button->SetBitmap( wxBitmap( wxT("ikony/lamana.png"), wxBITMAP_TYPE_ANY ) );
+	m_broken_line_button->SetBitmapPressed( wxBitmap( wxT("ikony/lamana_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_broken_line_button->SetBitmapFocus( wxBitmap( wxT("ikony/lamana_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_broken_line_button->SetBitmapCurrent( wxBitmap( wxT("ikony/lamana_s.png"), wxBITMAP_TYPE_ANY ) );
 	m_broken_line_button->SetMinSize( wxSize( 40,40 ) );
 	m_broken_line_button->SetMaxSize( wxSize( 40,40 ) );
 
@@ -58,6 +65,9 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_curve_line_button = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
 	m_curve_line_button->SetBitmap( wxBitmap( wxT("ikony/krzywa.png"), wxBITMAP_TYPE_ANY ) );
+	m_curve_line_button->SetBitmapPressed( wxBitmap( wxT("ikony/krzywa_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_curve_line_button->SetBitmapFocus( wxBitmap( wxT("ikony/krzywa_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_curve_line_button->SetBitmapCurrent( wxBitmap( wxT("ikony/krzywa_s.png"), wxBITMAP_TYPE_ANY ) );
 	m_curve_line_button->SetMinSize( wxSize( 40,40 ) );
 	m_curve_line_button->SetMaxSize( wxSize( 40,40 ) );
 
@@ -66,6 +76,9 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_ellipse_button = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
 	m_ellipse_button->SetBitmap( wxBitmap( wxT("ikony/elipsa.png"), wxBITMAP_TYPE_ANY ) );
+	m_ellipse_button->SetBitmapPressed( wxBitmap( wxT("ikony/elipsa_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_ellipse_button->SetBitmapFocus( wxBitmap( wxT("ikony/elipsa_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_ellipse_button->SetBitmapCurrent( wxBitmap( wxT("ikony/elipsa_s.png"), wxBITMAP_TYPE_ANY ) );
 	m_ellipse_button->SetMinSize( wxSize( 40,40 ) );
 	m_ellipse_button->SetMaxSize( wxSize( 40,40 ) );
 
@@ -74,6 +87,9 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_square_button = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
 	m_square_button->SetBitmap( wxBitmap( wxT("ikony/kwadrat.png"), wxBITMAP_TYPE_ANY ) );
+	m_square_button->SetBitmapPressed( wxBitmap( wxT("ikony/kwadrat_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_square_button->SetBitmapFocus( wxBitmap( wxT("ikony/kwadrat_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_square_button->SetBitmapCurrent( wxBitmap( wxT("ikony/kwadrat_s.png"), wxBITMAP_TYPE_ANY ) );
 	m_square_button->SetMinSize( wxSize( 40,40 ) );
 	m_square_button->SetMaxSize( wxSize( 40,40 ) );
 
@@ -82,6 +98,9 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_triangle_button = new wxBitmapButton( this, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 
 	m_triangle_button->SetBitmap( wxBitmap( wxT("ikony/trojkat.png"), wxBITMAP_TYPE_ANY ) );
+	m_triangle_button->SetBitmapPressed( wxBitmap( wxT("ikony/trojkat_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_triangle_button->SetBitmapFocus( wxBitmap( wxT("ikony/trojkat_s.png"), wxBITMAP_TYPE_ANY ) );
+	m_triangle_button->SetBitmapCurrent( wxBitmap( wxT("ikony/trojkat_s.png"), wxBITMAP_TYPE_ANY ) );
 	m_triangle_button->SetMinSize( wxSize( 40,40 ) );
 	m_triangle_button->SetMaxSize( wxSize( 40,40 ) );
 

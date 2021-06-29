@@ -98,11 +98,11 @@ inline std::string Shape::txt_code() {
 		r = sqrt(pow(_points[1].x - _points[0].x, 2) + pow(_points[1].y - _points[0].y, 2));
 		shape_code = "CI ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x - r)) + " " + std::to_string(static_cast<int>(_points[0].y - r));
-		shape_code += " ";
+		shape_code += "  ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x - r)) + " " + std::to_string(static_cast<int>(_points[0].y + r));
-		shape_code += " ";
+		shape_code += "  ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x + r)) + " " + std::to_string(static_cast<int>(_points[0].y + r));
-		shape_code += " ";
+		shape_code += "  ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x + r)) + " " + std::to_string(static_cast<int>(_points[0].y - r));
 		shape_code += "     ";
 		break;
@@ -111,11 +111,11 @@ inline std::string Shape::txt_code() {
 		a = std::max(_points[1].x - _points[0].x, _points[1].y - _points[0].y);
 		shape_code = "SQ ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x)) + " " + std::to_string(static_cast<int>(_points[0].y));
-		shape_code += " ";
+		shape_code += "  ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x)) + " " + std::to_string(static_cast<int>(_points[0].y + a));
-		shape_code += " ";
+		shape_code += "  ";
 		shape_code += std::to_string(static_cast<int>(_points[1].x)) + " " + std::to_string(static_cast<int>(_points[1].y));
-		shape_code += " ";
+		shape_code += "  ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x)) + " " + std::to_string(static_cast<int>(_points[0].y - a));
 		shape_code += "     ";
 		break;
@@ -124,11 +124,11 @@ inline std::string Shape::txt_code() {
 		a = _points[1].y - _points[0].y;
 		shape_code = "EL ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x)) + " " + std::to_string(static_cast<int>(_points[0].y));
-		shape_code += " ";
+		shape_code += "  ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x)) + " " + std::to_string(static_cast<int>(_points[0].y + a));
-		shape_code += " ";
+		shape_code += "  ";
 		shape_code += std::to_string(static_cast<int>(_points[1].x)) + " " + std::to_string(static_cast<int>(_points[1].y));
-		shape_code += " ";
+		shape_code += "  ";
 		shape_code += std::to_string(static_cast<int>(_points[0].x)) + " " + std::to_string(static_cast<int>(_points[0].y - a));
 		shape_code += "     ";
 		break;
@@ -137,7 +137,7 @@ inline std::string Shape::txt_code() {
 		shape_code = "TR ";
 		for (int i = 0; i < 3; ++i) {
 			shape_code += std::to_string(static_cast<int>(_points[i].x)) + " " + std::to_string(static_cast<int>(_points[i].y));
-			shape_code += " ";
+			shape_code += "  ";
 		}
 		shape_code += "     ";
 		break;
@@ -146,7 +146,7 @@ inline std::string Shape::txt_code() {
 		shape_code = "CL ";
 		for (auto point : _points) {
 			shape_code += std::to_string(static_cast<int>(point.x)) + " " + std::to_string(static_cast<int>(point.y));
-			shape_code += " ";
+			shape_code += "  ";
 		}
 		shape_code += "     ";
 		break;
@@ -155,7 +155,7 @@ inline std::string Shape::txt_code() {
 		shape_code = "BL ";
 		for (auto point : _points) {
 			shape_code += std::to_string(static_cast<int>(point.x)) + " " + std::to_string(static_cast<int>(point.y));
-			shape_code += " ";
+			shape_code += "  ";
 		}
 		shape_code += "     ";
 		break;
