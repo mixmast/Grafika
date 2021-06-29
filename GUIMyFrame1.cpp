@@ -293,7 +293,7 @@ void GUIMyFrame1::correct_brightness(wxImage& image_to_change) {
 void GUIMyFrame1::paint_on_wxpanel() 
 {
 	std::shared_ptr<wxClientDC> DC(new wxClientDC(m_panel));
-
+	wxSize diagonal;
 	DC->Clear(); //Rysowanie tla wraz z jasnoscia
 	if (m_background_image_dis) {
 		DC->DrawBitmap( m_background_bitmap, 0, 0, true );
@@ -304,6 +304,12 @@ void GUIMyFrame1::paint_on_wxpanel()
 
 	int mouseX;
 	int mouseY;
+	if (m_fill == false)
+		DC->SetBrush(*wxTRANSPARENT_BRUSH);
+	else
+		DC->SetBrush(m_fill_colour->GetColour());
+
+	DC->SetPen(m_line_colour->GetColour());
 
 	switch (m_actual_shape.getKind()) {
 
@@ -317,17 +323,38 @@ void GUIMyFrame1::paint_on_wxpanel()
 		}
 		else
 			radious = sqrt(pow(m_actual_shape[0].x - m_actual_shape[1].x, 2) + pow(m_actual_shape[0].y- m_actual_shape[1].y, 2));
-		if (m_fill == false)
-			DC->SetBrush(*wxTRANSPARENT_BRUSH);
-		else
-			DC->SetBrush(m_fill_colour->GetColour());
-			
-		DC->SetPen(m_line_colour->GetColour());
+		
 		DC->DrawCircle(m_actual_shape[0], radious);
 		
 		break;
 	case SQUARE:
+		
+		double d;
+		if (m_first_click_flag == false) { 
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+			d = sqrt(pow(m_actual_shape[0].x - mouseX, 2) + pow(m_actual_shape[0].y - mouseY, 2))/sqrt(2);
+		}
+		else
+			d = sqrt(pow(m_actual_shape[0].x - m_actual_shape[1].x, 2) + pow(m_actual_shape[0].y - m_actual_shape[1].y, 2))/sqrt(2);
 
+		DC->DrawRectangle(m_actual_shape[0].x, m_actual_shape[0].y, d, d);
+		break;
+	case ELLIPSE :
+
+		double f;
+		if (m_first_click_flag == false) {
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+			f = sqrt(pow(m_actual_shape[0].x - mouseX, 2) + pow(m_actual_shape[0].y - mouseY, 2));
+		}
+		else
+			f = sqrt(pow(m_actual_shape[0].x - m_actual_shape[1].x, 2) + pow(m_actual_shape[0].y - m_actual_shape[1].y, 2));
+
+		DC->DrawEllipse(m_actual_shape[0].x, m_actual_shape[0].y,f, f);
+		break;
 	default:
 		break;
 	}
