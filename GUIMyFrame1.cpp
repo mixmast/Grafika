@@ -314,7 +314,7 @@ void GUIMyFrame1::paint_on_wxpanel()
 
 	case CIRCLE:
 		double radious;
-		if (m_first_click_flag == false) { // nie zakonczono rysowania 
+		if (m_first_click_flag == false) { 
 			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
 			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
 			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
@@ -329,30 +329,34 @@ void GUIMyFrame1::paint_on_wxpanel()
 	case SQUARE:
 		
 		double d;
-		if (m_first_click_flag == false) { 
-			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-			d = sqrt(pow(m_actual_shape[0].x - mouseX, 2) + pow(m_actual_shape[0].y - mouseY, 2))/sqrt(2);
-		}
-		else
-			d = sqrt(pow(m_actual_shape[0].x - m_actual_shape[1].x, 2) + pow(m_actual_shape[0].y - m_actual_shape[1].y, 2))/sqrt(2);
-
-		DC->DrawRectangle(m_actual_shape[0].x, m_actual_shape[0].y, d, d);
-		break;
-	case ELLIPSE :
-
-		double f;
 		if (m_first_click_flag == false) {
 			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
 			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
 			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-			f = sqrt(pow(m_actual_shape[0].x - mouseX, 2) + pow(m_actual_shape[0].y - mouseY, 2));
+			d = std::max(mouseX-m_actual_shape[0].x , mouseY-m_actual_shape[0].y );
 		}
 		else
-			f = sqrt(pow(m_actual_shape[0].x - m_actual_shape[1].x, 2) + pow(m_actual_shape[0].y - m_actual_shape[1].y, 2));
+			d = std::max(m_actual_shape[1].x - m_actual_shape[0].x, m_actual_shape[1].y - m_actual_shape[0].y);
+		
+			DC->DrawRectangle(m_actual_shape[0].x, m_actual_shape[0].y, d, d);
+		break;
+	case ELLIPSE :
 
-		DC->DrawEllipse(m_actual_shape[0].x, m_actual_shape[0].y,f, f);
+		double f,g;
+		if (m_first_click_flag == false) {
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+			f = mouseX - m_actual_shape[0].x;
+			g = mouseY - m_actual_shape[0].y;
+		}
+		else
+		{
+			f = m_actual_shape[1].x - m_actual_shape[0].x;
+			g = m_actual_shape[1].y - m_actual_shape[0].y;
+		}
+
+		DC->DrawEllipse(m_actual_shape[0].x, m_actual_shape[0].y,f, g);
 		break;
 	default:
 		break;
