@@ -79,3 +79,6 @@ inline wxPoint& Shape::operator[] (unsigned int indeks) {
 	return _points[indeks];
 }
 
+inline  Shape::operator bool() {
+	return _points.size() > 1;
+}
