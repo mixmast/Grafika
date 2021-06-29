@@ -9,12 +9,14 @@ MyFrame1( parent )
 
 void GUIMyFrame1::m_next_frame_button_click( wxCommandEvent& event )
 {
-// tutaj klatka zapisana w wektorze bedzie zapisywana do txt
+	save_vector_to_file();
+	m_shapes.clear();
+	paint_on_wxpanel();
 }
 
 void GUIMyFrame1::m_save_button_clicked( wxCommandEvent& event )
 {
-// tutaj w sumie to samo co wyzej ale bez czyszczenia tego wektora
+	save_vector_to_file();
 }
 
 void GUIMyFrame1::m_choosing_bacground_file(wxFileDirPickerEvent& event)
@@ -257,7 +259,8 @@ void GUIMyFrame1::m_right_click_on_panel( wxMouseEvent& event )
 
 	case BROKEN_LINE:
 	case CURVE_LINE:
-		m_shapes.push_back(m_actual_shape);
+		if( m_actual_shape )
+			m_shapes.push_back(m_actual_shape);
 		m_first_click_flag = true;
 		m_actual_shape.clear();
 		break;
@@ -310,6 +313,8 @@ void GUIMyFrame1::paint_on_wxpanel()
 
 	DC->SetPen(m_line_colour->GetColour());
 
+	draw_vector_with_dc(DC);
+
 	switch (m_actual_shape.getKind()) {
 
 	case CIRCLE:
@@ -317,94 +322,107 @@ void GUIMyFrame1::paint_on_wxpanel()
 		if (m_first_click_flag == false) { 
 			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
 			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
 			radious = sqrt(pow(m_actual_shape[0].x - mouseX, 2) + pow(m_actual_shape[0].y - mouseY, 2));
 		}
-		else
-			radious = sqrt(pow(m_actual_shape[0].x - m_actual_shape[1].x, 2) + pow(m_actual_shape[0].y- m_actual_shape[1].y, 2));
-		
 		DC->DrawCircle(m_actual_shape[0], radious);
-		
 		break;
+
 	case SQUARE:
-		
 		double d;
 		if (m_first_click_flag == false) {
 			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
 			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
 			d = std::max(mouseX-m_actual_shape[0].x , mouseY-m_actual_shape[0].y );
 		}
-		else
-			d = std::max(m_actual_shape[1].x - m_actual_shape[0].x, m_actual_shape[1].y - m_actual_shape[0].y);
-		
-			DC->DrawRectangle(m_actual_shape[0].x, m_actual_shape[0].y, d, d);
+		DC->DrawRectangle(m_actual_shape[0].x, m_actual_shape[0].y, d, d);
 		break;
-	case ELLIPSE :
 
+	case ELLIPSE :
 		double f,g;
 		if (m_first_click_flag == false) {
 			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
 			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
 			f = mouseX - m_actual_shape[0].x;
 			g = mouseY - m_actual_shape[0].y;
 		}
-		else
-		{
-			f = m_actual_shape[1].x - m_actual_shape[0].x;
-			g = m_actual_shape[1].y - m_actual_shape[0].y;
-		}
-
 		DC->DrawEllipse(m_actual_shape[0].x, m_actual_shape[0].y,f, g);
 		break;
 
-	case TRIANGLE:
-
-		
-		if (m_first_click_flag == false) {
-			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-			
-			
-		}
-		
-		DC->DrawSpline(m_actual_shape[0].x, m_actual_shape[0].y, m_actual_shape[1].x, m_actual_shape[1].y, m_actual_shape[2].x, m_actual_shape[2].y);
-		
-		break;
-	case BROKEN_LINE:
-
-
-		if (m_first_click_flag == false) {
-			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-
-		}
-
-		DC->DrawSpline(m_actual_shape[0].x, m_actual_shape[0].y, m_actual_shape[1].x, m_actual_shape[1].y, m_actual_shape[2].x, m_actual_shape[2].y);
-
-		break;
-	case CURVE_LINE:
-
-
-		if (m_first_click_flag == false) {
-			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-
-		}
-
-		DC->DrawSpline(m_actual_shape[0].x, m_actual_shape[0].y, m_actual_shape[1].x, m_actual_shape[1].y, m_actual_shape[2].x, m_actual_shape[2].y);
-
-		break;
 	default:
 		break;
 	}
-	
+}
+
+void GUIMyFrame1::save_vector_to_file() {
+
+	std::fstream plik;
+	std::string tekst;
+	std::string first_line;
+	std::string temp_line;
+	std::string save_line = "";
+	std::vector<std::string> lines;
+	int frames{0};
+	plik.open("Animation.txt", std::ios::in);
+
+	if (plik.good()) {
+		
+		getline(plik, first_line);
+		frames = stoi(first_line);
+
+		while (getline(plik, temp_line)) {
+			lines.push_back(temp_line);
+		}
+	}
+	plik.close();
+
+	for (auto shape : m_shapes) {
+		save_line += shape.txt_code();
+	}
+	save_line += "\n";
+
+	++frames;
+	lines.push_back(save_line);
+
+	plik.open("Animation.txt", std::ios::out);
+
+	if (plik.good()) {
+		plik << frames << std::endl;
+		for (auto line : lines)
+			plik << line << std::endl;
+	}
+}
+
+void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC) {
+	for (auto shape : m_shapes) {
+		switch (shape.getKind()) {
+
+		case CIRCLE:
+
+			double radious;
+			radious = sqrt(pow(shape[0].x - shape[1].x, 2) + pow(shape[0].y - shape[1].y, 2));
+			DC->DrawCircle(shape[0], radious);
+			break;
+
+		case SQUARE:
+
+			double d;
+			d = std::max(shape[1].x - shape[0].x, shape[1].y - shape[0].y);
+			DC->DrawRectangle(shape[0].x, shape[0].y, d, d);
+
+			break;
+		case ELLIPSE:
+
+			double f, g;
+			f = shape[1].x - shape[0].x;
+			g = shape[1].y - shape[0].y;
+			DC->DrawEllipse(shape[0].x, shape[0].y, f, g);
+			break;
+
+		default:
+			break;
+		}
+	}
 }
 
 
