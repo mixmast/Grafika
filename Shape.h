@@ -50,7 +50,7 @@ inline 	Shape::Shape(std::string code_txt) {
 	std::string element_from_string;
 	std::vector<int> shape_desc;
 
-	while (delete_element_from_string(code_txt, element_from_string) != '|') {
+	while (delete_element_from_string(code_txt, element_from_string) != "|") {
 		number = stoi(element_from_string);
 		shape_desc.push_back(number);
 	}

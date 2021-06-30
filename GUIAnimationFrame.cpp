@@ -30,6 +30,8 @@ void GUIAnimationFrame::m_new_animation_file_selected( wxFileDirPickerEvent& eve
 
 	m_amount_of_frames = stoi(line);
 	file.close();
+
+	load_frame(1);
 }
 
 void GUIAnimationFrame::m_speed_slider_changed( wxScrollEvent& event )
@@ -61,10 +63,14 @@ void GUIAnimationFrame::load_frame(int number_of_frame) {
 		delete_element_from_string(line, element_from_line);
 		m_frame_brightness = stoi(element_from_line);
 
-		while (line != "| ") { //tym znakiem koñczy siê ka¿da klatka
+		int i = 0;
+		while (line != "| ") { //tym znakiem koñczy siê ka¿da klatka tu tez jest jakis blad
 			delete_element_from_string(line, element_from_line, '|');
-			m_shapes.push_back(static_cast<Shape>(element_from_line));
+
+			m_shapes.push_back(static_cast<Shape>(element_from_line + "| "));
+			i++;
 		}
+
 	}
 }
 
