@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Functions.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GUIAnimationFrame.h" />
     <ClInclude Include="GUIMyFrame1.h" />

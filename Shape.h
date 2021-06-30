@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include "Functions.h"
 
 //kazdy kontener ksztalt to typ i lista punktow wiec tu jest taki uniwersalny kontener na kazdy z nich
 enum SHAPES_FLAG { CIRCLE = 100, TRIANGLE = 110, SQUARE = 120, ELLIPSE = 130, BROKEN_LINE = 140, CURVE_LINE = 150 };
@@ -43,28 +44,14 @@ private:
 };
 
 
-inline std::string delete_number_from_string(std::string& numbers_between_spaces, int& number) {
-
-	int i = 0;
-	std::string extracted_elements;
-	while (numbers_between_spaces[i] == ' ')
-		++i;
-	while (numbers_between_spaces[i] != ' ') {
-		extracted_elements.push_back(numbers_between_spaces[i]);
-		++i;
-	}
-	numbers_between_spaces = numbers_between_spaces.substr(i);
-	number = stoi(extracted_elements);
-
-	return extracted_elements;
-}
-
 inline 	Shape::Shape(std::string code_txt) {
 
 	int number;
+	std::string element_from_string;
 	std::vector<int> shape_desc;
 
-	while (delete_number_from_string(code_txt, number) != '|') {
+	while (delete_element_from_string(code_txt, element_from_string) != '|') {
+		number = stoi(element_from_string);
 		shape_desc.push_back(number);
 	}
 
