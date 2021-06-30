@@ -38,7 +38,7 @@ private:
 	bool _filled{ false };
 	int _kind_of_shape{ 0 };
 	std::vector<wxPoint> _points;
-	wxBrush _fill;
+	wxBrush _fill=*wxTRANSPARENT_BRUSH;
 	wxColour _line;
 };
 

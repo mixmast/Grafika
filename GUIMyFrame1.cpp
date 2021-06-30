@@ -105,16 +105,16 @@ m_triangle_button->SetBitmap(wxBitmap(wxT("ikony/trojkat_s.png"), wxBITMAP_TYPE_
 
 void GUIMyFrame1::m_fill_button_check( wxCommandEvent& event )
 {
-if (!m_fill)
-{
-m_fill = true;
-m_actual_shape.setFilled(m_fill_colour->GetColour());
-}
-else
-{
-m_actual_shape.setUnFilled();
-m_fill = false;
-}
+	if (!m_fill)
+	{
+		m_fill = true;
+		m_actual_shape.setFilled(m_fill_colour->GetColour());
+	}
+	else
+	{
+		m_actual_shape.setFilled(*wxTRANSPARENT_BRUSH);
+		m_fill = false;
+	}
 }
 
 void GUIMyFrame1::m_left_click_on_panel( wxMouseEvent& event )
