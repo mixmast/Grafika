@@ -49,14 +49,11 @@ class GUIMyFrame1 : public MyFrame1
 		Shape m_actual_shape { 0 };
 		int m_drawing_flag { false };
 		bool m_first_click_flag { true };
-		bool m_second_click_flag{ true };
 		bool m_fill{ false };
-
 		std::shared_ptr<wxImage> m_background_image_org { nullptr };
-		std::shared_ptr<wxImage> m_background_image_dis { nullptr };
-
+		std::shared_ptr<wxImage> m_background_image_dis{ nullptr };
 		wxBitmap m_background_bitmap { wxNullBitmap };
-		wxColour m_background_color { 128, 128, 128 };
+	
 
 		void paint_on_wxpanel();
 		void draw_vector_with_dc(std::shared_ptr<wxClientDC> DC);
