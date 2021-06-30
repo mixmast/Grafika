@@ -17,6 +17,11 @@ void GUIAnimationFrame::m_start_button_clicked( wxCommandEvent& event )
 // TODO: Implement m_start_button_clicked
 }
 
+void GUIAnimationFrame::m_new_animation_file_selected( wxFileDirPickerEvent& event )
+{
+	
+}
+
 void GUIAnimationFrame::m_speed_slider_changed( wxScrollEvent& event )
 {
 	m_animation_speed = m_slider2->GetValue() / 100.0;

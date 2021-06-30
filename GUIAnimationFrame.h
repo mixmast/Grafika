@@ -21,6 +21,7 @@ class GUIAnimationFrame : public AnimationFrame
 		// Handlers for AnimationFrame events.
 		void m_stop_button_clicked( wxCommandEvent& event );
 		void m_start_button_clicked( wxCommandEvent& event );
+		void m_new_animation_file_selected( wxFileDirPickerEvent& event );
 		void m_speed_slider_changed( wxScrollEvent& event );
 	public:
 		/** Constructor */
@@ -35,6 +36,7 @@ class GUIAnimationFrame : public AnimationFrame
 		wxColour m_background_color{ 128, 128, 128 };
 
 		double m_animation_speed;
+
 
 };
 

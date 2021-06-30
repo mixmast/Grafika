@@ -64,7 +64,7 @@ class GUIMyFrame1 : public MyFrame1
 		void reset_bitmap_buttons();
 		void correct_brightness(wxImage& image_to_change);
 
+
 };
 
-void draw_vector_with_dc(std::shared_ptr<wxClientDC> DC, std::vector<Shape>& shape_vec);
 #endif // __GUIMyFrame1__

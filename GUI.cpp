@@ -274,6 +274,7 @@ AnimationFrame::AnimationFrame( wxWindow* parent, wxWindowID id, const wxString&
 	// Connect Events
 	m_stop_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AnimationFrame::m_stop_button_clicked ), NULL, this );
 	m_start_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AnimationFrame::m_start_button_clicked ), NULL, this );
+	m_animation_file_picker->Connect( wxEVT_COMMAND_FILEPICKER_CHANGED, wxFileDirPickerEventHandler( AnimationFrame::m_new_animation_file_selected ), NULL, this );
 	m_slider2->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
 	m_slider2->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
 	m_slider2->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
@@ -290,6 +291,7 @@ AnimationFrame::~AnimationFrame()
 	// Disconnect Events
 	m_stop_button->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AnimationFrame::m_stop_button_clicked ), NULL, this );
 	m_start_button->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AnimationFrame::m_start_button_clicked ), NULL, this );
+	m_animation_file_picker->Disconnect( wxEVT_COMMAND_FILEPICKER_CHANGED, wxFileDirPickerEventHandler( AnimationFrame::m_new_animation_file_selected ), NULL, this );
 	m_slider2->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
 	m_slider2->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
 	m_slider2->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );

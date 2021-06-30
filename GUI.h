@@ -106,6 +106,7 @@ class AnimationFrame : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void m_stop_button_clicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void m_start_button_clicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void m_new_animation_file_selected( wxFileDirPickerEvent& event ) { event.Skip(); }
 		virtual void m_speed_slider_changed( wxScrollEvent& event ) { event.Skip(); }
 
 
