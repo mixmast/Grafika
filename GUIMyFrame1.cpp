@@ -111,7 +111,7 @@ void GUIMyFrame1::m_fill_button_check(wxCommandEvent& event)
 	}
 	else
 	{
-		m_actual_shape.setUnFilled();
+		m_actual_shape.setFilled(*wxTRANSPARENT_BRUSH);
 		m_fill = false;
 	}
 }
