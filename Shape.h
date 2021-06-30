@@ -20,7 +20,7 @@ public:
 	bool isEmpty();
 	
 	bool isFilled();
-	void setFilled();
+	void setFilled(wxBrush x);
 	void setUnFilled();
 
 	void push_back(wxPoint& point);
@@ -30,11 +30,15 @@ public:
 
 	wxPoint& operator[] (unsigned int indeks);
 	operator bool();
-
+	wxBrush GetColour();
+	wxColour GetLine();
+	void SetLine(wxColour x);
 private:
 	bool _filled{ false };
 	int _kind_of_shape{ 0 };
 	std::vector<wxPoint> _points;
+	wxBrush _fill;
+	wxColour _line;
 };
 
 inline void Shape::setKind( int kind ) {
@@ -49,8 +53,9 @@ inline bool Shape::isFilled() {
 	return _filled;
 }
 
-inline void Shape::setFilled() {
+inline void Shape::setFilled(wxBrush x) {
 	_filled = true;
+	_fill = x;
 }
 
 inline void Shape::setUnFilled() {
@@ -87,7 +92,19 @@ inline wxPoint& Shape::operator[] (unsigned int indeks) {
 inline  Shape::operator bool() {
 	return _points.size() > 1;
 }
+inline wxBrush Shape::GetColour()
+{
+	return _fill;
+}
 
+inline wxColour Shape::GetLine()
+{
+	return _line;
+}
+inline void Shape::SetLine(wxColour x)
+{
+	_line = x;
+}
 inline std::string Shape::txt_code() {
 
 	double r = 0;

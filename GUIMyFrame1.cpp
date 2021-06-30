@@ -107,7 +107,7 @@ void GUIMyFrame1::m_fill_button_check(wxCommandEvent& event)
 	if (!m_fill)
 	{
 		m_fill = true;
-		m_actual_shape.setFilled();
+		m_actual_shape.setFilled(m_fill_colour->GetColour());
 	}
 	else
 	{
@@ -121,6 +121,7 @@ void GUIMyFrame1::m_left_click_on_panel(wxMouseEvent& event)
 
 	int mouseY;
 	int mouseX;
+
 
 	switch (m_drawing_flag) {
 
@@ -136,7 +137,7 @@ void GUIMyFrame1::m_left_click_on_panel(wxMouseEvent& event)
 			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
 
 			if (m_fill_button->IsChecked())
-				m_actual_shape.setFilled();
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
 		}
 		else {
 			m_first_click_flag = true;
@@ -162,7 +163,7 @@ void GUIMyFrame1::m_left_click_on_panel(wxMouseEvent& event)
 			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
 
 			if (m_fill_button->IsChecked())
-				m_actual_shape.setFilled();
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
 		}
 		else {
 			m_first_click_flag = true;
@@ -187,7 +188,7 @@ void GUIMyFrame1::m_left_click_on_panel(wxMouseEvent& event)
 			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
 
 			if (m_fill_button->IsChecked())
-				m_actual_shape.setFilled();
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
 		}
 		else {
 			m_first_click_flag = true;
@@ -213,7 +214,7 @@ void GUIMyFrame1::m_left_click_on_panel(wxMouseEvent& event)
 			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
 
 			if (m_fill_button->IsChecked())
-				m_actual_shape.setFilled();
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
 		}
 		else {
 			m_first_click_flag = true;
@@ -238,7 +239,7 @@ void GUIMyFrame1::m_left_click_on_panel(wxMouseEvent& event)
 			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
 
 			if (m_fill_button->IsChecked())
-				m_actual_shape.setFilled();
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
 		}
 		else {
 			m_first_click_flag = true;
@@ -263,7 +264,7 @@ void GUIMyFrame1::m_left_click_on_panel(wxMouseEvent& event)
 			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
 
 			if (m_fill_button->IsChecked())
-				m_actual_shape.setFilled();
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
 		}
 		else {
 			m_first_click_flag = true;
@@ -370,9 +371,10 @@ void GUIMyFrame1::paint_on_wxpanel()
 		if (m_fill == false)
 			DC->SetBrush(*wxTRANSPARENT_BRUSH);
 		else
-			DC->SetBrush(m_fill_colour->GetColour());
+			DC->SetBrush(m_actual_shape.GetColour());
 
-		DC->SetPen(m_line_colour->GetColour());
+		m_actual_shape.SetLine(m_line_colour->GetColour());
+		DC->SetPen(wxPen(m_actual_shape.GetLine(), 3));
 		DC->DrawCircle(m_actual_shape[0], radious);
 		break;
 
@@ -386,9 +388,9 @@ void GUIMyFrame1::paint_on_wxpanel()
 		if (m_fill == false)
 			DC->SetBrush(*wxTRANSPARENT_BRUSH);
 		else
-			DC->SetBrush(m_fill_colour->GetColour());
-
-		DC->SetPen(m_line_colour->GetColour());
+			DC->SetBrush(m_actual_shape.GetColour());
+		m_actual_shape.SetLine(m_line_colour->GetColour());
+		DC->SetPen(wxPen(m_actual_shape.GetLine(), 3));
 		DC->DrawRectangle(m_actual_shape[0].x, m_actual_shape[0].y, d, d);
 		break;
 
@@ -404,9 +406,9 @@ void GUIMyFrame1::paint_on_wxpanel()
 		if (m_fill == false)
 			DC->SetBrush(*wxTRANSPARENT_BRUSH);
 		else
-			DC->SetBrush(m_fill_colour->GetColour());
-
-		DC->SetPen(m_line_colour->GetColour());
+			DC->SetBrush(m_actual_shape.GetColour());
+		m_actual_shape.SetLine(m_line_colour->GetColour());
+		DC->SetPen(wxPen(m_actual_shape.GetLine(), 3));
 		DC->DrawEllipse(m_actual_shape[0].x, m_actual_shape[0].y,f, g);
 		break;
 
@@ -427,10 +429,10 @@ void GUIMyFrame1::paint_on_wxpanel()
 		if (m_fill == false)
 			DC->SetBrush(*wxTRANSPARENT_BRUSH);
 		else
-			DC->SetBrush(m_fill_colour->GetColour());
+			DC->SetBrush(m_actual_shape.GetColour());
 
-		DC->SetPen(m_line_colour->GetColour());
-		
+		m_actual_shape.SetLine(m_line_colour->GetColour());
+		DC->SetPen(wxPen(m_actual_shape.GetLine(), 3));
 		DC->DrawPolygon(3, tab);
 		break;
 	case BROKEN_LINE :
@@ -441,7 +443,8 @@ void GUIMyFrame1::paint_on_wxpanel()
 
 		}
 
-		DC->SetPen(m_line_colour->GetColour());
+		m_actual_shape.SetLine(m_line_colour->GetColour());
+		DC->SetPen(wxPen(m_actual_shape.GetLine(), 3));
 
 		DC->DrawLine(m_actual_shape[0].x, m_actual_shape[0].y, mouseX, mouseY);
 		break;
@@ -453,9 +456,8 @@ void GUIMyFrame1::paint_on_wxpanel()
 			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
 
 		}
-
-		DC->SetPen(m_line_colour->GetColour());
-		
+		m_actual_shape.SetLine(m_line_colour->GetColour());
+		DC->SetPen(wxPen(m_actual_shape.GetLine(), 3));
 
 		DC->DrawSpline(m_actual_shape[0].x, m_actual_shape[0].y, mouseX, mouseY, m_actual_shape[1].x, m_actual_shape[1].y);
 		break;
@@ -474,6 +476,8 @@ void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC)
 
 			double radious;
 			radious = sqrt(pow(shape[0].x - shape[1].x, 2) + pow(shape[0].y - shape[1].y, 2));
+			DC->SetBrush(shape.GetColour());
+			DC->SetPen(wxPen(shape.GetLine(), 3));
 			DC->DrawCircle(shape[0], radious);
 			break;
 
@@ -481,6 +485,8 @@ void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC)
 
 			double d;
 			d = std::max(shape[1].x - shape[0].x, shape[1].y - shape[0].y);
+			DC->SetBrush(shape.GetColour());
+			DC->SetPen(wxPen(shape.GetLine(), 3));
 			DC->DrawRectangle(shape[0].x, shape[0].y, d, d);
 
 			break;
@@ -489,6 +495,8 @@ void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC)
 			double f, g;
 			f = shape[1].x - shape[0].x;
 			g = shape[1].y - shape[0].y;
+			DC->SetBrush(shape.GetColour());
+			DC->SetPen(wxPen(shape.GetLine(), 3));
 			DC->DrawEllipse(shape[0].x, shape[0].y, f, g);
 			break;
 
@@ -500,12 +508,19 @@ void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC)
 			tab[0] = wxPoint(shape[0].x, shape[1].y);
 			tab[2] = wxPoint(shape[1].x, shape[1].y);
 			tab[1] = wxPoint(x, shape[0].y);
+			DC->SetBrush(shape.GetColour());
+			DC->SetPen(wxPen(shape.GetLine(), 3));
 			DC->DrawPolygon(3, tab);
 			break;
 
 		case BROKEN_LINE:
 
+			DC->SetPen(wxPen(shape.GetLine(), 3));
 			DC->DrawLine(shape[0].x, shape[0].y, shape[1].x, shape[1].y);
+			break;
+		case CURVE_LINE:
+			DC->SetPen(wxPen(shape.GetLine(), 3));
+			DC->DrawSpline(shape[0].x, shape[0].y, shape[2].x, shape[2].y, shape[1].x, shape[1].y);
 			break;
 		default:
 			break;
