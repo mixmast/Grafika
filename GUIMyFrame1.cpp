@@ -1,4 +1,5 @@
 #include "GUIMyFrame1.h"
+#include "GUIAnimationFrame.h"
 
 GUIMyFrame1::GUIMyFrame1( wxWindow* parent )
 :
@@ -7,11 +8,11 @@ MyFrame1( parent )
 
 }
 
-void GUIMyFrame1::m_next_frame_button_click( wxCommandEvent& event )
+void GUIMyFrame1::m_next_frame_button_click(wxCommandEvent& event)
 {
-save_vector_to_file();
-m_shapes.clear();
-paint_on_wxpanel();
+	save_vector_to_file();
+	m_shapes.clear();
+	paint_on_wxpanel();
 }
 
 void GUIMyFrame1::m_save_button_clicked( wxCommandEvent& event )
@@ -19,89 +20,100 @@ void GUIMyFrame1::m_save_button_clicked( wxCommandEvent& event )
 	save_vector_to_file();
 }
 
-void GUIMyFrame1::m_choosing_bacground_file( wxFileDirPickerEvent& event )
+void GUIMyFrame1::m_undo_button_clicked( wxCommandEvent& event )
 {
-std::string path_to_file = m_filePicker->GetPath();
-
-std::shared_ptr<wxImage> image_org(new wxImage(path_to_file));
-m_background_image_org = image_org;
-
-std::shared_ptr<wxImage> image_dis(new wxImage(path_to_file));
-m_background_image_dis = image_dis;
-
-correct_brightness(*m_background_image_dis);
-
-paint_on_wxpanel();
+// TODO: Implement m_undo_button_clicked
 }
 
-void GUIMyFrame1::m_slider_change( wxScrollEvent& event )
+void GUIMyFrame1::m_display_button_clicked(wxCommandEvent& event)
 {
-if (m_background_image_dis) {
-
-*m_background_image_dis = m_background_image_org->Copy();
-correct_brightness(*m_background_image_dis);
-}
-else {
-int level = std::min(static_cast<int>(m_slider->GetValue() / 100.0 * 255), 255);
-m_background_color = wxColour(level, level, level);
-}
-paint_on_wxpanel();
+	wxFrame* animationFrame = new GUIAnimationFrame(NULL);
+	animationFrame->Show(true);
 }
 
-void GUIMyFrame1::m_circle_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_choosing_bacground_file(wxFileDirPickerEvent& event)
+{
+	std::string path_to_file = m_filePicker->GetPath();
+
+	std::shared_ptr<wxImage> image_org(new wxImage(path_to_file));
+	m_background_image_org = image_org;
+
+	std::shared_ptr<wxImage> image_dis(new wxImage(path_to_file));
+	m_background_image_dis = image_dis;
+
+	correct_brightness(*m_background_image_dis);
+
+	paint_on_wxpanel();
+}
+
+void GUIMyFrame1::m_slider_change(wxScrollEvent& event)
+{
+	if (m_background_image_dis) {
+
+		*m_background_image_dis = m_background_image_org->Copy();
+		correct_brightness(*m_background_image_dis);
+	}
+	else {
+		int level = std::min(static_cast<int>(m_slider->GetValue() / 100.0 * 255), 255);
+		m_background_color = wxColour(level, level, level);
+	}
+	paint_on_wxpanel();
+}
+
+void GUIMyFrame1::m_circle_button_clicked(wxCommandEvent& event)
 {
 	m_drawing_flag = CIRCLE;
 	reset_bitmap_buttons();
 	m_circle_button->SetBitmap(wxBitmap(wxT("ikony/okrag_s.png"), wxBITMAP_TYPE_ANY));
 }
 
-void GUIMyFrame1::m_broken_line_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_broken_line_button_clicked(wxCommandEvent& event)
 {
 	m_drawing_flag = BROKEN_LINE;
 	reset_bitmap_buttons();
 	m_broken_line_button->SetBitmap(wxBitmap(wxT("ikony/lamana_s.png"), wxBITMAP_TYPE_ANY));
 }
 
-void GUIMyFrame1::m_curve_line_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_curve_line_button_clicked(wxCommandEvent& event)
 {
 	m_drawing_flag = CURVE_LINE;
 	reset_bitmap_buttons();
 	m_curve_line_button->SetBitmap(wxBitmap(wxT("ikony/krzywa_s.png"), wxBITMAP_TYPE_ANY));
 }
 
-void GUIMyFrame1::m_ellipse_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_ellipse_button_clicked(wxCommandEvent& event)
 {
 	m_drawing_flag = ELLIPSE;
 	reset_bitmap_buttons();
 	m_ellipse_button->SetBitmap(wxBitmap(wxT("ikony/elipsa_s.png"), wxBITMAP_TYPE_ANY));
 }
 
-void GUIMyFrame1::m_square_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_square_button_clicked(wxCommandEvent& event)
 {
 	m_drawing_flag = SQUARE;
 	reset_bitmap_buttons();
 	m_square_button->SetBitmap(wxBitmap(wxT("ikony/kwadrat_s.png"), wxBITMAP_TYPE_ANY));
 }
 
-void GUIMyFrame1::m_triangle_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_triangle_button_clicked(wxCommandEvent& event)
 {
 	m_drawing_flag = TRIANGLE;
 	reset_bitmap_buttons();
 	m_triangle_button->SetBitmap(wxBitmap(wxT("ikony/trojkat_s.png"), wxBITMAP_TYPE_ANY));
 }
 
-void GUIMyFrame1::m_fill_button_check( wxCommandEvent& event )
+void GUIMyFrame1::m_fill_button_check(wxCommandEvent& event)
 {
-if (!m_fill)
-{
-m_fill = true;
-m_actual_shape.setFilled();
-}
-else
-{
-m_actual_shape.setUnFilled();
-m_fill = false;
-}
+	if (!m_fill)
+	{
+		m_fill = true;
+		m_actual_shape.setFilled();
+	}
+	else
+	{
+		m_actual_shape.setUnFilled();
+		m_fill = false;
+	}
 }
 
 void GUIMyFrame1::m_left_click_on_panel(wxMouseEvent& event)
@@ -267,10 +279,10 @@ void GUIMyFrame1::m_left_click_on_panel(wxMouseEvent& event)
 	}
 }
 
-void GUIMyFrame1::m_mouse_on_panel_moved( wxMouseEvent& event )
+void GUIMyFrame1::m_mouse_on_panel_moved(wxMouseEvent& event)
 {
-if(m_first_click_flag == false)
-paint_on_wxpanel();
+	if (m_first_click_flag == false)
+		paint_on_wxpanel();
 
 }
 
@@ -296,6 +308,16 @@ void GUIMyFrame1::m_right_click_on_panel(wxMouseEvent& event)
 
 }
 
+
+void GUIMyFrame1::reset_bitmap_buttons() 
+{
+	m_circle_button->SetBitmap(wxBitmap(wxT("ikony/okrag.png"), wxBITMAP_TYPE_ANY));
+	m_broken_line_button->SetBitmap(wxBitmap(wxT("ikony/lamana.png"), wxBITMAP_TYPE_ANY));
+	m_curve_line_button->SetBitmap(wxBitmap(wxT("ikony/krzywa.png"), wxBITMAP_TYPE_ANY));
+	m_ellipse_button->SetBitmap(wxBitmap(wxT("ikony/elipsa.png"), wxBITMAP_TYPE_ANY));
+	m_square_button->SetBitmap(wxBitmap(wxT("ikony/kwadrat.png"), wxBITMAP_TYPE_ANY));
+	m_triangle_button->SetBitmap(wxBitmap(wxT("ikony/trojkat.png"), wxBITMAP_TYPE_ANY));
+}
 
 void GUIMyFrame1::correct_brightness(wxImage& image_to_change) 
 {
@@ -442,58 +464,8 @@ void GUIMyFrame1::paint_on_wxpanel()
 	}
 }
 
-
-
-void GUIMyFrame1::save_vector_to_file() 
+void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC) 
 {
-
-	std::fstream plik;
-	std::string tekst;
-	std::string first_line;
-	std::string temp_line;
-	std::string save_line = "";
-	std::vector<std::string> lines;
-	int frames{0};
-	plik.open("Animation.txt", std::ios::in);
-
-	if (plik.good()) {
-		
-		getline(plik, first_line);
-		frames = stoi(first_line);
-
-		while (getline(plik, temp_line)) {
-			lines.push_back(temp_line);
-		}
-	}
-	plik.close();
-
-	for (auto shape : m_shapes) {
-		save_line += shape.txt_code();
-	}
-	save_line += "\n";
-
-	++frames;
-	lines.push_back(save_line);
-
-	plik.open("Animation.txt", std::ios::out);
-
-	if (plik.good()) {
-		plik << frames << std::endl;
-		for (auto line : lines)
-			plik << line << std::endl;
-	}
-}
-
-void GUIMyFrame1::reset_bitmap_buttons() {
-	m_circle_button->SetBitmap(wxBitmap(wxT("ikony/okrag.png"), wxBITMAP_TYPE_ANY));
-	m_broken_line_button->SetBitmap(wxBitmap(wxT("ikony/lamana.png"), wxBITMAP_TYPE_ANY));
-	m_curve_line_button->SetBitmap(wxBitmap(wxT("ikony/krzywa.png"), wxBITMAP_TYPE_ANY));
-	m_ellipse_button->SetBitmap(wxBitmap(wxT("ikony/elipsa.png"), wxBITMAP_TYPE_ANY));
-	m_square_button->SetBitmap(wxBitmap(wxT("ikony/kwadrat.png"), wxBITMAP_TYPE_ANY));
-	m_triangle_button->SetBitmap(wxBitmap(wxT("ikony/trojkat.png"), wxBITMAP_TYPE_ANY));
-}
-
-void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC) {
 	wxPoint tab[3];
 	for (auto shape : m_shapes) {
 		switch (shape.getKind()) {
@@ -539,4 +511,58 @@ void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC) {
 			break;
 		}
 	}
+}
+
+void GUIMyFrame1::save_vector_to_file() 
+{
+	std::string tekst;
+	std::string first_line;
+	std::string temp_line;
+	std::string save_line;
+	std::string path_to_background;
+	std::string brightness_value;
+
+	std::fstream plik;
+	std::vector<std::string> lines;
+	int frames{0};
+
+	plik.open("Animation.txt", std::ios::in);
+
+	if (plik.good()) {
+		
+		getline(plik, first_line);
+		frames = stoi(first_line);
+
+		while (getline(plik, temp_line)) {
+			lines.push_back(temp_line);
+		}
+	}
+	plik.close();
+
+	path_to_background = m_filePicker->GetPath();
+	if (path_to_background == "")
+		path_to_background = "NULL";
+	brightness_value = std::to_string(m_slider->GetValue());
+
+	save_line = path_to_background + " " + brightness_value + " ";
+
+	for (auto shape : m_shapes) {
+		save_line += shape.txt_code();
+	}
+	save_line += "\n";
+
+	++frames;
+	lines.push_back(save_line);
+
+	plik.open("Animation.txt", std::ios::out);
+
+	if (plik.good()) {
+		plik << frames << std::endl;
+		for (auto line : lines)
+			plik << line << std::endl;
+	}
+}
+
+void draw_vector_with_dc(std::shared_ptr<wxClientDC> DC, std::vector<Shape>& shape_vec) {
+	//tutaj bedzie cala zawartosc z metody draw_vector_with dc ¿ebym mozna ja wykorzystac w animation frame
 }

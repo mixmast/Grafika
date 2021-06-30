@@ -11,7 +11,7 @@
 
 MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
-	this->SetSizeHints( wxSize( 800,600 ), wxSize( 800,600 ) );
+	this->SetSizeHints( wxSize( 750,600 ), wxSize( 750,600 ) );
 	this->SetForegroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BTNTEXT ) );
 
 	wxBoxSizer* bSizer1;
@@ -25,6 +25,12 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 
 	m_save_button = new wxButton( this, wxID_ANY, wxT("Zapisz animacje"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_save_button, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM|wxEXPAND, 5 );
+
+	m_undo_button = new wxButton( this, wxID_ANY, wxT("Cofnij"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer2->Add( m_undo_button, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM|wxEXPAND, 5 );
+
+	m_display_animation_button = new wxButton( this, wxID_ANY, wxT("Wyświetl"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer2->Add( m_display_animation_button, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM|wxEXPAND, 5 );
 
 	m_filePicker = new wxFilePickerCtrl( this, wxID_ANY, wxEmptyString, wxT("Wybierz plik z tlem"), wxT("*.png; *.jpg;"), wxDefaultPosition, wxDefaultSize, wxFLP_OPEN );
 	bSizer2->Add( m_filePicker, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM|wxEXPAND, 5 );
@@ -132,13 +138,14 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	wxBoxSizer* bSizer5;
 	bSizer5 = new wxBoxSizer( wxHORIZONTAL );
 
+	bSizer5->SetMinSize( wxSize( 610,600 ) );
 	m_panel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_panel->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_WINDOW ) );
 
 	bSizer5->Add( m_panel, 1, wxALL|wxEXPAND, 5 );
 
 
-	bSizer1->Add( bSizer5, 1, wxALIGN_CENTER_HORIZONTAL|wxEXPAND, 5 );
+	bSizer1->Add( bSizer5, 0, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5 );
 
 
 	this->SetSizer( bSizer1 );
@@ -149,6 +156,8 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	// Connect Events
 	m_nextbutton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_next_frame_button_click ), NULL, this );
 	m_save_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_save_button_clicked ), NULL, this );
+	m_undo_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_undo_button_clicked ), NULL, this );
+	m_display_animation_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_display_button_clicked ), NULL, this );
 	m_filePicker->Connect( wxEVT_COMMAND_FILEPICKER_CHANGED, wxFileDirPickerEventHandler( MyFrame1::m_choosing_bacground_file ), NULL, this );
 	m_slider->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MyFrame1::m_slider_change ), NULL, this );
 	m_slider->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MyFrame1::m_slider_change ), NULL, this );
@@ -176,6 +185,8 @@ MyFrame1::~MyFrame1()
 	// Disconnect Events
 	m_nextbutton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_next_frame_button_click ), NULL, this );
 	m_save_button->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_save_button_clicked ), NULL, this );
+	m_undo_button->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_undo_button_clicked ), NULL, this );
+	m_display_animation_button->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MyFrame1::m_display_button_clicked ), NULL, this );
 	m_filePicker->Disconnect( wxEVT_COMMAND_FILEPICKER_CHANGED, wxFileDirPickerEventHandler( MyFrame1::m_choosing_bacground_file ), NULL, this );
 	m_slider->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( MyFrame1::m_slider_change ), NULL, this );
 	m_slider->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( MyFrame1::m_slider_change ), NULL, this );
@@ -196,5 +207,97 @@ MyFrame1::~MyFrame1()
 	m_panel->Disconnect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( MyFrame1::m_left_click_on_panel ), NULL, this );
 	m_panel->Disconnect( wxEVT_MOTION, wxMouseEventHandler( MyFrame1::m_mouse_on_panel_moved ), NULL, this );
 	m_panel->Disconnect( wxEVT_RIGHT_DCLICK, wxMouseEventHandler( MyFrame1::m_right_click_on_panel ), NULL, this );
+
+}
+
+AnimationFrame::AnimationFrame( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxSize( 620,620 ), wxSize( 620,620 ) );
+
+	wxBoxSizer* bSizer5;
+	bSizer5 = new wxBoxSizer( wxVERTICAL );
+
+	wxBoxSizer* bSizer6;
+	bSizer6 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_stop_button = new wxButton( this, wxID_ANY, wxT("Stop"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_stop_button->SetMinSize( wxSize( -1,20 ) );
+
+	bSizer6->Add( m_stop_button, 1, wxEXPAND, 5 );
+
+	m_start_button = new wxButton( this, wxID_ANY, wxT("Start"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_start_button->SetMinSize( wxSize( -1,20 ) );
+
+	bSizer6->Add( m_start_button, 1, wxEXPAND, 5 );
+
+	m_animation_file_picker = new wxFilePickerCtrl( this, wxID_ANY, wxEmptyString, wxT("Wybierz animacje"), wxT("*.txt"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer6->Add( m_animation_file_picker, 1, wxEXPAND, 5 );
+
+	m_staticText6 = new wxStaticText( this, wxID_ANY, wxT("            Szybkosc :  "), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText6->Wrap( -1 );
+	bSizer6->Add( m_staticText6, 0, wxALL, 5 );
+
+	m_staticText4 = new wxStaticText( this, wxID_ANY, wxT("0.25"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText4->Wrap( -1 );
+	bSizer6->Add( m_staticText4, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	m_slider2 = new wxSlider( this, wxID_ANY, 100, 25, 200, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
+	bSizer6->Add( m_slider2, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	m_staticText5 = new wxStaticText( this, wxID_ANY, wxT(" 2   "), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText5->Wrap( -1 );
+	bSizer6->Add( m_staticText5, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5 );
+
+
+	bSizer5->Add( bSizer6, 1, wxEXPAND, 5 );
+
+	wxBoxSizer* bSizer61;
+	bSizer61 = new wxBoxSizer( wxVERTICAL );
+
+	bSizer61->SetMinSize( wxSize( 610,600 ) );
+	m_animation_panel = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxSize( 600,600 ), wxTAB_TRAVERSAL );
+	m_animation_panel->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BTNHIGHLIGHT ) );
+	m_animation_panel->SetMinSize( wxSize( 600,600 ) );
+	m_animation_panel->SetMaxSize( wxSize( 600,600 ) );
+
+	bSizer61->Add( m_animation_panel, 1, wxALL, 5 );
+
+
+	bSizer5->Add( bSizer61, 1, wxEXPAND, 5 );
+
+
+	this->SetSizer( bSizer5 );
+	this->Layout();
+
+	this->Centre( wxBOTH );
+
+	// Connect Events
+	m_stop_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AnimationFrame::m_stop_button_clicked ), NULL, this );
+	m_start_button->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AnimationFrame::m_start_button_clicked ), NULL, this );
+	m_slider2->Connect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Connect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Connect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Connect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Connect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Connect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Connect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Connect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Connect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+}
+
+AnimationFrame::~AnimationFrame()
+{
+	// Disconnect Events
+	m_stop_button->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AnimationFrame::m_stop_button_clicked ), NULL, this );
+	m_start_button->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( AnimationFrame::m_start_button_clicked ), NULL, this );
+	m_slider2->Disconnect( wxEVT_SCROLL_TOP, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Disconnect( wxEVT_SCROLL_BOTTOM, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Disconnect( wxEVT_SCROLL_LINEUP, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Disconnect( wxEVT_SCROLL_LINEDOWN, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Disconnect( wxEVT_SCROLL_PAGEUP, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Disconnect( wxEVT_SCROLL_PAGEDOWN, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Disconnect( wxEVT_SCROLL_THUMBTRACK, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Disconnect( wxEVT_SCROLL_THUMBRELEASE, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
+	m_slider2->Disconnect( wxEVT_SCROLL_CHANGED, wxScrollEventHandler( AnimationFrame::m_speed_slider_changed ), NULL, this );
 
 }
