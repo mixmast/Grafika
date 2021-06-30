@@ -24,6 +24,8 @@ class GUIMyFrame1 : public MyFrame1
 		// Handlers for MyFrame1 events.
 		void m_next_frame_button_click( wxCommandEvent& event );
 		void m_save_button_clicked( wxCommandEvent& event );
+		void m_undo_button_clicked( wxCommandEvent& event );
+		void m_display_button_clicked( wxCommandEvent& event );
 		void m_choosing_bacground_file( wxFileDirPickerEvent& event );
 		void m_slider_change( wxScrollEvent& event );
 		void m_circle_button_clicked( wxCommandEvent& event );
@@ -45,18 +47,15 @@ class GUIMyFrame1 : public MyFrame1
 
 		std::vector<Shape> m_shapes; // cala klatka tu jest zapisana
 		Shape m_actual_shape { 0 };
-		int m_drawing_flag { 0 };
-		bool m_first_click_flag { 1 };
-		bool m_second_click_flag{ 1 };
-		bool m_fill{0};
+		int m_drawing_flag { false };
+		bool m_first_click_flag { true };
+		bool m_second_click_flag{ true };
+		bool m_fill{ false };
 
-		//std::string m_frame_drawing_text = { "" };
-
-		std::shared_ptr<wxImage> m_background_image_org { 0 };
-		std::shared_ptr<wxImage> m_background_image_dis { 0 };
+		std::shared_ptr<wxImage> m_background_image_org { nullptr };
+		std::shared_ptr<wxImage> m_background_image_dis { nullptr };
 
 		wxBitmap m_background_bitmap { wxNullBitmap };
-
 		wxColour m_background_color { 128, 128, 128 };
 
 		void paint_on_wxpanel();
@@ -65,11 +64,7 @@ class GUIMyFrame1 : public MyFrame1
 		void reset_bitmap_buttons();
 		void correct_brightness(wxImage& image_to_change);
 
-
-
-
-
-
 };
 
+void draw_vector_with_dc(std::shared_ptr<wxClientDC> DC, std::vector<Shape>& shape_vec);
 #endif // __GUIMyFrame1__
