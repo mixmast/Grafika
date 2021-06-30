@@ -16,6 +16,8 @@ bool MyApp::OnInit()
 {
 	wxInitAllImageHandlers();
 	wxFrame* mainFrame = new GUIMyFrame1(NULL);
+	/*wxFrame* animationFrame = new GUIAnimationFrame(NULL);
+	animationFrame->Show(true);*/
 	mainFrame->Show(true);
 	SetTopWindow(mainFrame);
 

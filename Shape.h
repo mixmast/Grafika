@@ -4,6 +4,7 @@
 #include <wx/gdicmn.h>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 //kazdy kontener ksztalt to typ i lista punktow wiec tu jest taki uniwersalny kontener na kazdy z nich
 enum SHAPES_FLAG { CIRCLE = 100, TRIANGLE = 110, SQUARE = 120, ELLIPSE = 130, BROKEN_LINE = 140, CURVE_LINE = 150 };
@@ -12,6 +13,7 @@ class Shape {
 
 public:
 	Shape(int kind_of_shape = 0);
+	//Shape(std::string code_txt); 
 	
 	int getKind();
 	void setKind( int kind );
