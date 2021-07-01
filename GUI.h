@@ -27,6 +27,7 @@
 #include <wx/checkbox.h>
 #include <wx/panel.h>
 #include <wx/frame.h>
+#include <wx/textctrl.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -96,8 +97,10 @@ class AnimationFrame : public wxFrame
 	protected:
 		wxButton* m_stop_button;
 		wxButton* m_start_button;
+		wxButton* m_restart_button;
 		wxFilePickerCtrl* m_animation_file_picker;
 		wxStaticText* m_staticText6;
+		wxTextCtrl* m_animation_speed_textxtctr;
 		wxStaticText* m_staticText4;
 		wxSlider* m_slider2;
 		wxStaticText* m_staticText5;
@@ -106,6 +109,7 @@ class AnimationFrame : public wxFrame
 		// Virtual event handlers, overide them in your derived class
 		virtual void m_stop_button_clicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void m_start_button_clicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void m_restatr_button_clicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void m_new_animation_file_selected( wxFileDirPickerEvent& event ) { event.Skip(); }
 		virtual void m_speed_slider_changed( wxScrollEvent& event ) { event.Skip(); }
 

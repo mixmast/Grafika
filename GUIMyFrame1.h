@@ -53,12 +53,14 @@ class GUIMyFrame1 : public MyFrame1
 		std::shared_ptr<wxImage> m_background_image_org { nullptr };
 		std::shared_ptr<wxImage> m_background_image_dis{ nullptr };
 		wxBitmap m_background_bitmap { wxNullBitmap };
-	
+
 
 		void paint_on_wxpanel();
 		void save_vector_to_file();
 		void reset_bitmap_buttons();
 		void correct_brightness(wxImage& image_to_change);
+
+
 
 };
 
