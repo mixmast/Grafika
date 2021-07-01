@@ -2,6 +2,7 @@
 #define _SHAPE_
 
 #include <wx/gdicmn.h>
+#include <wx/dcclient.h>
 #include <vector>
 #include <string>
 #include <algorithm>
@@ -216,6 +217,70 @@ inline std::string Shape::txt_code() {
 	shape_code += " | ";
 
 	return shape_code;
+}
+
+
+
+
+inline void draw_vector_with_dc(std::shared_ptr<wxClientDC> DC, std::vector<Shape>& shapes) {
+	wxPoint tab[3];
+	for (auto shape : shapes) {
+		switch (shape.getKind()) {
+
+		case CIRCLE:
+
+			double radious;
+			radious = sqrt(pow(shape[0].x - shape[1].x, 2) + pow(shape[0].y - shape[1].y, 2));
+			DC->SetBrush(shape.GetColour());
+			DC->SetPen(wxPen(shape.GetLine(), 3));
+			DC->DrawCircle(shape[0], radious);
+			break;
+
+		case SQUARE:
+
+			double d;
+			d = std::max(shape[1].x - shape[0].x, shape[1].y - shape[0].y);
+			DC->SetBrush(shape.GetColour());
+			DC->SetPen(wxPen(shape.GetLine(), 3));
+			DC->DrawRectangle(shape[0].x, shape[0].y, d, d);
+
+			break;
+		case ELLIPSE:
+
+			double f, g;
+			f = shape[1].x - shape[0].x;
+			g = shape[1].y - shape[0].y;
+			DC->SetBrush(shape.GetColour());
+			DC->SetPen(wxPen(shape.GetLine(), 3));
+			DC->DrawEllipse(shape[0].x, shape[0].y, f, g);
+			break;
+
+		case TRIANGLE:
+
+			double x;
+			x = shape[1].x - shape[0].x;
+			x = x / 2 + shape[0].x;
+			tab[0] = wxPoint(shape[0].x, shape[1].y);
+			tab[2] = wxPoint(shape[1].x, shape[1].y);
+			tab[1] = wxPoint(x, shape[0].y);
+			DC->SetBrush(shape.GetColour());
+			DC->SetPen(wxPen(shape.GetLine(), 3));
+			DC->DrawPolygon(3, tab);
+			break;
+
+		case BROKEN_LINE:
+
+			DC->SetPen(wxPen(shape.GetLine(), 3));
+			DC->DrawLine(shape[0].x, shape[0].y, shape[1].x, shape[1].y);
+			break;
+		case CURVE_LINE:
+			DC->SetPen(wxPen(shape.GetLine(), 3));
+			DC->DrawSpline(shape[0].x, shape[0].y, shape[2].x, shape[2].y, shape[1].x, shape[1].y);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 #endif // _SHAPE_

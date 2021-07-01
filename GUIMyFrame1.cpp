@@ -47,18 +47,18 @@ correct_brightness(*m_background_image_dis);
 paint_on_wxpanel();
 }
 
-void GUIMyFrame1::m_slider_change( wxScrollEvent& event )
+void GUIMyFrame1::m_slider_change(wxScrollEvent& event)
 {
-if (m_background_image_dis) {
+	if (m_background_image_dis) {
 
-*m_background_image_dis = m_background_image_org->Copy();
-correct_brightness(*m_background_image_dis);
-}
-else {
-int level = std::min(static_cast<int>(m_slider->GetValue() / 100.0 * 255), 255);
-m_background_color = wxColour(level, level, level);
-}
-paint_on_wxpanel();
+		*m_background_image_dis = m_background_image_org->Copy();
+		correct_brightness(*m_background_image_dis);
+	}
+	/*else {
+		int level = std::min(static_cast<int>(m_slider->GetValue() / 100.0 * 255), 255);
+		m_background_color = wxColour(level, level, level);
+	}*/
+	paint_on_wxpanel();
 }
 
 void GUIMyFrame1::m_circle_button_clicked( wxCommandEvent& event )
@@ -358,7 +358,7 @@ void GUIMyFrame1::paint_on_wxpanel()
 	int mouseY;
 	
 
-	draw_vector_with_dc(DC);
+	draw_vector_with_dc(DC, m_shapes);
 
 	switch (m_actual_shape.getKind()) {
 
@@ -467,7 +467,7 @@ void GUIMyFrame1::paint_on_wxpanel()
 	}
 }
 
-void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC) 
+/*void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC) 
 {
 	wxPoint tab[3];
 	for (auto shape : m_shapes) {
@@ -527,7 +527,7 @@ void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC)
 			break;
 		}
 	}
-}
+}*/
 
 void GUIMyFrame1::save_vector_to_file() 
 {
@@ -579,6 +579,3 @@ void GUIMyFrame1::save_vector_to_file()
 	}
 }
 
-void draw_vector_with_dc(std::shared_ptr<wxClientDC> DC, std::vector<Shape>& shape_vec) {
-	//tutaj bedzie cala zawartosc z metody draw_vector_with dc ¿ebym mozna ja wykorzystac w animation frame
-}

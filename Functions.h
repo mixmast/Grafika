@@ -2,12 +2,17 @@
 
 #include <fstream>
 #include <string>
+#include <memory>
+#include <wx/pen.h>
+#include "Shape.h"
 
 
 inline std::string delete_element_from_string(std::string& elements_between_spaces, std::string& element, char separator = ' ') {
 
+	
 	int i = 0;
 	std::string extracted_elements;
+	
 	while (elements_between_spaces[i] == separator)
 		++i;
 	while (elements_between_spaces[i] != separator) {
