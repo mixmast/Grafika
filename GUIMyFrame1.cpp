@@ -56,7 +56,7 @@ correct_brightness(*m_background_image_dis);
 }
 else {
 int level = std::min(static_cast<int>(m_slider->GetValue() / 100.0 * 255), 255);
-m_background_color = wxColour(level, level, level);
+//m_background_color = wxColour(level, level, level);
 }
 paint_on_wxpanel();
 }
