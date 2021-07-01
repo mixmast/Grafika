@@ -49,6 +49,7 @@ void GUIAnimationFrame::load_frame(int number_of_frame) {
 	std::string line;
 	std::string element_from_line;
 
+
 	file.open(static_cast<std::string>(m_animation_file_picker->GetPath()), std::ios::in);
 	m_shapes.clear();
 
@@ -59,22 +60,23 @@ void GUIAnimationFrame::load_frame(int number_of_frame) {
 
 		delete_element_from_string(line, element_from_line);
 		if (element_from_line != m_path_to_background) {
+
 			m_path_to_background = element_from_line;
-			if(element_from_line != "NULL")
-				m_background_bitmap.LoadFile(m_path_to_background);
-			//a co w przeciwnym wypadku?
+			if (element_from_line != "NULL") {
+				m_background_bitmap.LoadFile(m_path_to_background, wxBITMAP_TYPE_ANY);
+				m_bacground_flag = true;
+			}
+			else
+				m_bacground_flag = false;
 		}
 
 		delete_element_from_string(line, element_from_line);
 		m_frame_brightness = stoi(element_from_line);
 
-		int i = 0;
-		while (  line != "| " ) { 
+		while (  line != "| "  && line != " ") { 
 			delete_element_from_string(line, element_from_line, '|');
 			m_shapes.push_back(static_cast<Shape>(element_from_line + "| "));
-			i++;
 		}
-		i++;
 	}
 	file.close();
 }
@@ -82,6 +84,9 @@ void GUIAnimationFrame::load_frame(int number_of_frame) {
 void GUIAnimationFrame::paint_frame() {
 	std::shared_ptr<wxClientDC> DC (new wxClientDC(m_animation_panel));
 	DC->Clear();
+	if (m_bacground_flag) {
+		DC->DrawBitmap(m_background_bitmap, 0 , 0);
+	}
 	draw_vector_with_dc(DC, m_shapes);
 }
 

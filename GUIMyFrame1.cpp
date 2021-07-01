@@ -8,11 +8,11 @@ MyFrame1( parent )
 
 }
 
-void GUIMyFrame1::m_next_frame_button_click( wxCommandEvent& event )
+void GUIMyFrame1::m_next_frame_button_click(wxCommandEvent& event)
 {
-save_vector_to_file();
-m_shapes.clear();
-paint_on_wxpanel();
+	save_vector_to_file();
+	m_shapes.clear();
+	paint_on_wxpanel();
 }
 
 void GUIMyFrame1::m_save_button_clicked( wxCommandEvent& event )
@@ -21,30 +21,31 @@ void GUIMyFrame1::m_save_button_clicked( wxCommandEvent& event )
 }
 
 void GUIMyFrame1::m_undo_button_clicked( wxCommandEvent& event )
-
 {
-// TODO: Implement m_undo_button_clicked
+	if( !m_shapes.empty() )
+		m_shapes.pop_back();
+	paint_on_wxpanel();
 }
 
-void GUIMyFrame1::m_display_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_display_button_clicked(wxCommandEvent& event)
 {
-wxFrame* animationFrame = new GUIAnimationFrame(NULL);
-animationFrame->Show(true);
+	wxFrame* animationFrame = new GUIAnimationFrame(NULL);
+	animationFrame->Show(true);
 }
 
-void GUIMyFrame1::m_choosing_bacground_file( wxFileDirPickerEvent& event )
+void GUIMyFrame1::m_choosing_bacground_file(wxFileDirPickerEvent& event)
 {
-std::string path_to_file = m_filePicker->GetPath();
+	std::string path_to_file = m_filePicker->GetPath();
 
-std::shared_ptr<wxImage> image_org(new wxImage(path_to_file));
-m_background_image_org = image_org;
+	std::shared_ptr<wxImage> image_org(new wxImage(path_to_file));
+	m_background_image_org = image_org;
 
-std::shared_ptr<wxImage> image_dis(new wxImage(path_to_file));
-m_background_image_dis = image_dis;
+	std::shared_ptr<wxImage> image_dis(new wxImage(path_to_file));
+	m_background_image_dis = image_dis;
 
-correct_brightness(*m_background_image_dis);
+	correct_brightness(*m_background_image_dis);
 
-paint_on_wxpanel();
+	paint_on_wxpanel();
 }
 
 void GUIMyFrame1::m_slider_change(wxScrollEvent& event)
@@ -54,53 +55,49 @@ void GUIMyFrame1::m_slider_change(wxScrollEvent& event)
 		*m_background_image_dis = m_background_image_org->Copy();
 		correct_brightness(*m_background_image_dis);
 	}
-	/*else {
-		int level = std::min(static_cast<int>(m_slider->GetValue() / 100.0 * 255), 255);
-		m_background_color = wxColour(level, level, level);
-	}*/
 	paint_on_wxpanel();
 }
 
-void GUIMyFrame1::m_circle_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_circle_button_clicked(wxCommandEvent& event)
 {
-m_drawing_flag = CIRCLE;
-reset_bitmap_buttons();
-m_circle_button->SetBitmap(wxBitmap(wxT("ikony/okrag_s.png"), wxBITMAP_TYPE_ANY));
+	m_drawing_flag = CIRCLE;
+	reset_bitmap_buttons();
+	m_circle_button->SetBitmap(wxBitmap(wxT("ikony/okrag_s.png"), wxBITMAP_TYPE_ANY));
 }
 
-void GUIMyFrame1::m_broken_line_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_broken_line_button_clicked(wxCommandEvent& event)
 {
-m_drawing_flag = BROKEN_LINE;
-reset_bitmap_buttons();
-m_broken_line_button->SetBitmap(wxBitmap(wxT("ikony/lamana_s.png"), wxBITMAP_TYPE_ANY));
+	m_drawing_flag = BROKEN_LINE;
+	reset_bitmap_buttons();
+	m_broken_line_button->SetBitmap(wxBitmap(wxT("ikony/lamana_s.png"), wxBITMAP_TYPE_ANY));
 }
 
-void GUIMyFrame1::m_curve_line_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_curve_line_button_clicked(wxCommandEvent& event)
 {
-m_drawing_flag = CURVE_LINE;
-reset_bitmap_buttons();
-m_curve_line_button->SetBitmap(wxBitmap(wxT("ikony/krzywa_s.png"), wxBITMAP_TYPE_ANY));
+	m_drawing_flag = CURVE_LINE;
+	reset_bitmap_buttons();
+	m_curve_line_button->SetBitmap(wxBitmap(wxT("ikony/krzywa_s.png"), wxBITMAP_TYPE_ANY));
 }
 
-void GUIMyFrame1::m_ellipse_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_ellipse_button_clicked(wxCommandEvent& event)
 {
-m_drawing_flag = ELLIPSE;
-reset_bitmap_buttons();
-m_ellipse_button->SetBitmap(wxBitmap(wxT("ikony/elipsa_s.png"), wxBITMAP_TYPE_ANY));
+	m_drawing_flag = ELLIPSE;
+	reset_bitmap_buttons();
+	m_ellipse_button->SetBitmap(wxBitmap(wxT("ikony/elipsa_s.png"), wxBITMAP_TYPE_ANY));
 }
 
-void GUIMyFrame1::m_square_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_square_button_clicked(wxCommandEvent& event)
 {
-m_drawing_flag = SQUARE;
-reset_bitmap_buttons();
-m_square_button->SetBitmap(wxBitmap(wxT("ikony/kwadrat_s.png"), wxBITMAP_TYPE_ANY));
+	m_drawing_flag = SQUARE;
+	reset_bitmap_buttons();
+	m_square_button->SetBitmap(wxBitmap(wxT("ikony/kwadrat_s.png"), wxBITMAP_TYPE_ANY));
 }
 
-void GUIMyFrame1::m_triangle_button_clicked( wxCommandEvent& event )
+void GUIMyFrame1::m_triangle_button_clicked(wxCommandEvent& event)
 {
-m_drawing_flag = TRIANGLE;
-reset_bitmap_buttons();
-m_triangle_button->SetBitmap(wxBitmap(wxT("ikony/trojkat_s.png"), wxBITMAP_TYPE_ANY));
+	m_drawing_flag = TRIANGLE;
+	reset_bitmap_buttons();
+	m_triangle_button->SetBitmap(wxBitmap(wxT("ikony/trojkat_s.png"), wxBITMAP_TYPE_ANY));
 }
 
 void GUIMyFrame1::m_fill_button_check( wxCommandEvent& event )
@@ -117,196 +114,196 @@ void GUIMyFrame1::m_fill_button_check( wxCommandEvent& event )
 	}
 }
 
-void GUIMyFrame1::m_left_click_on_panel( wxMouseEvent& event )
+void GUIMyFrame1::m_left_click_on_panel(wxMouseEvent& event)
 {
 
-int mouseY;
-int mouseX;
+	int mouseY;
+	int mouseX;
 
 
-switch (m_drawing_flag) {
+	switch (m_drawing_flag) {
 
 
-case CIRCLE:
-if (m_first_click_flag) {
+	case CIRCLE:
+		if (m_first_click_flag) {
 
-m_first_click_flag = false;
-m_actual_shape.setKind(CIRCLE);
+			m_first_click_flag = false;
+			m_actual_shape.setKind(CIRCLE);
 
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
 
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled(m_fill_colour->GetColour());
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
+		}
+		else {
+			m_first_click_flag = true;
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
+		break;
+
+	case TRIANGLE:
+
+		if (m_first_click_flag) {
+
+			m_first_click_flag = false;
+			m_actual_shape.setKind(TRIANGLE);
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
+		}
+		else {
+			m_first_click_flag = true;
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
+		break;
+
+	case SQUARE:
+
+		if (m_first_click_flag) {
+			m_first_click_flag = false;
+			m_actual_shape.setKind(SQUARE);
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
+		}
+		else {
+			m_first_click_flag = true;
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
+		break;
+
+	case ELLIPSE:
+
+		if (m_first_click_flag) {
+			m_first_click_flag = false;
+			m_actual_shape.setKind(ELLIPSE);
+
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
+		}
+		else {
+			m_first_click_flag = true;
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
+		break;
+
+	case BROKEN_LINE:
+
+		if (m_first_click_flag) {
+			m_first_click_flag = false;
+			m_actual_shape.setKind(BROKEN_LINE);
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
+		}
+		else {
+			m_first_click_flag = true;
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
+		break;
+
+	case CURVE_LINE:
+
+		if (m_first_click_flag) {
+			m_first_click_flag = false;
+			m_actual_shape.setKind(CURVE_LINE);
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			if (m_fill_button->IsChecked())
+				m_actual_shape.setFilled(m_fill_colour->GetColour());
+		}
+		else {
+			m_first_click_flag = true;
+
+			mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
+			mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
+			m_actual_shape.push_back(wxPoint(mouseX, mouseY));
+
+			m_shapes.push_back(m_actual_shape);
+			m_actual_shape.clear();
+		}
+		break;
+	}
 }
-else {
-m_first_click_flag = true;
 
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-m_shapes.push_back(m_actual_shape);
-m_actual_shape.clear();
-}
-break;
-
-case TRIANGLE:
-
-if (m_first_click_flag) {
-
-m_first_click_flag = false;
-m_actual_shape.setKind(TRIANGLE);
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled(m_fill_colour->GetColour());
-}
-else {
-m_first_click_flag = true;
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-m_shapes.push_back(m_actual_shape);
-m_actual_shape.clear();
-}
-break;
-
-case SQUARE:
-
-if (m_first_click_flag) {
-m_first_click_flag = false;
-m_actual_shape.setKind(SQUARE);
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled(m_fill_colour->GetColour());
-}
-else {
-m_first_click_flag = true;
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-m_shapes.push_back(m_actual_shape);
-m_actual_shape.clear();
-}
-break;
-
-case ELLIPSE:
-
-if (m_first_click_flag) {
-m_first_click_flag = false;
-m_actual_shape.setKind(ELLIPSE);
-
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled(m_fill_colour->GetColour());
-}
-else {
-m_first_click_flag = true;
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-m_shapes.push_back(m_actual_shape);
-m_actual_shape.clear();
-}
-break;
-
-case BROKEN_LINE:
-
-if (m_first_click_flag) {
-m_first_click_flag = false;
-m_actual_shape.setKind(BROKEN_LINE);
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled(m_fill_colour->GetColour());
-}
-else {
-m_first_click_flag = true;
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-m_shapes.push_back(m_actual_shape);
-m_actual_shape.clear();
-}
-break;
-
-case CURVE_LINE:
-
-if (m_first_click_flag) {
-m_first_click_flag = false;
-m_actual_shape.setKind(CURVE_LINE);
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-if (m_fill_button->IsChecked())
-m_actual_shape.setFilled(m_fill_colour->GetColour());
-}
-else {
-m_first_click_flag = true;
-
-mouseX = wxGetMousePosition().x - m_panel->GetScreenPosition().x;
-mouseY = wxGetMousePosition().y - m_panel->GetScreenPosition().y;
-m_actual_shape.push_back(wxPoint(mouseX, mouseY));
-
-m_shapes.push_back(m_actual_shape);
-m_actual_shape.clear();
-}
-break;
-}
-}
-
-void GUIMyFrame1::m_mouse_on_panel_moved( wxMouseEvent& event )
+void GUIMyFrame1::m_mouse_on_panel_moved(wxMouseEvent& event)
 {
-if (m_first_click_flag == false)
-paint_on_wxpanel();
+	if (m_first_click_flag == false)
+		paint_on_wxpanel();
 
 }
 
-void GUIMyFrame1::m_right_click_on_panel( wxMouseEvent& event )
+void GUIMyFrame1::m_right_click_on_panel(wxMouseEvent& event)
 {
 
-switch (m_drawing_flag) {
+	switch (m_drawing_flag) {
 
-case CIRCLE:
-case TRIANGLE:
-case SQUARE:
-case ELLIPSE:
-case BROKEN_LINE:
-case CURVE_LINE:
-m_first_click_flag = true;
-m_actual_shape.clear();
-paint_on_wxpanel();
-break;
+	case CIRCLE:
+	case TRIANGLE:
+	case SQUARE:
+	case ELLIPSE:
+	case BROKEN_LINE:
+	case CURVE_LINE:
+		m_first_click_flag = true;
+		m_actual_shape.clear();
+		paint_on_wxpanel();
+		break;
 
-default:
-break;
-}
+	default:
+		break;
+	}
 
 }
 
@@ -467,68 +464,6 @@ void GUIMyFrame1::paint_on_wxpanel()
 	}
 }
 
-/*void GUIMyFrame1::draw_vector_with_dc(std::shared_ptr<wxClientDC> DC) 
-{
-	wxPoint tab[3];
-	for (auto shape : m_shapes) {
-		switch (shape.getKind()) {
-
-		case CIRCLE:
-
-			double radious;
-			radious = sqrt(pow(shape[0].x - shape[1].x, 2) + pow(shape[0].y - shape[1].y, 2));
-			DC->SetBrush(shape.GetColour());
-			DC->SetPen(wxPen(shape.GetLine(), 3));
-			DC->DrawCircle(shape[0], radious);
-			break;
-
-		case SQUARE:
-
-			double d;
-			d = std::max(shape[1].x - shape[0].x, shape[1].y - shape[0].y);
-			DC->SetBrush(shape.GetColour());
-			DC->SetPen(wxPen(shape.GetLine(), 3));
-			DC->DrawRectangle(shape[0].x, shape[0].y, d, d);
-
-			break;
-		case ELLIPSE:
-
-			double f, g;
-			f = shape[1].x - shape[0].x;
-			g = shape[1].y - shape[0].y;
-			DC->SetBrush(shape.GetColour());
-			DC->SetPen(wxPen(shape.GetLine(), 3));
-			DC->DrawEllipse(shape[0].x, shape[0].y, f, g);
-			break;
-
-		case TRIANGLE:
-
-			double x;
-			x = shape[1].x - shape[0].x;
-			x = x / 2 + shape[0].x;
-			tab[0] = wxPoint(shape[0].x, shape[1].y);
-			tab[2] = wxPoint(shape[1].x, shape[1].y);
-			tab[1] = wxPoint(x, shape[0].y);
-			DC->SetBrush(shape.GetColour());
-			DC->SetPen(wxPen(shape.GetLine(), 3));
-			DC->DrawPolygon(3, tab);
-			break;
-
-		case BROKEN_LINE:
-
-			DC->SetPen(wxPen(shape.GetLine(), 3));
-			DC->DrawLine(shape[0].x, shape[0].y, shape[1].x, shape[1].y);
-			break;
-		case CURVE_LINE:
-			DC->SetPen(wxPen(shape.GetLine(), 3));
-			DC->DrawSpline(shape[0].x, shape[0].y, shape[2].x, shape[2].y, shape[1].x, shape[1].y);
-			break;
-		default:
-			break;
-		}
-	}
-}*/
-
 void GUIMyFrame1::save_vector_to_file() 
 {
 	std::string tekst;
@@ -556,10 +491,13 @@ void GUIMyFrame1::save_vector_to_file()
 	plik.close();
 
 	path_to_background = m_filePicker->GetPath();
+
 	if (path_to_background == "")
 		path_to_background = "NULL";
-	brightness_value = std::to_string(m_slider->GetValue());
+	else
+		convert_to_relative_path(path_to_background);
 
+	brightness_value = std::to_string(m_slider->GetValue());
 	save_line = path_to_background + " " + brightness_value + " ";
 
 	for (auto shape : m_shapes) {

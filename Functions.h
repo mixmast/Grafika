@@ -32,3 +32,9 @@ inline std::fstream& GotoLine(std::fstream& file, int num) {
 	}
 	return file;
 }
+
+inline void convert_to_relative_path(std::string& inrelative_path) {
+
+	int num = inrelative_path.find("tlo");
+	inrelative_path = inrelative_path.substr(num);
+}
