@@ -49,6 +49,7 @@ class GUIMyFrame1 : public MyFrame1
 		Shape m_actual_shape { 0 };
 		int m_drawing_flag { false };
 		bool m_first_click_flag { true };
+		bool m_second_click_flag{ false };
 		bool m_fill{ false };
 		std::shared_ptr<wxImage> m_background_image_org { nullptr };
 		std::shared_ptr<wxImage> m_background_image_dis{ nullptr };
@@ -56,11 +57,9 @@ class GUIMyFrame1 : public MyFrame1
 
 
 		void paint_on_wxpanel();
-		void save_vector_to_file();
+		void save_vector_to_file(std::string file_name = "Animation.txt");
 		void reset_bitmap_buttons();
 		void correct_brightness(wxImage& image_to_change);
-
-
 
 };
 

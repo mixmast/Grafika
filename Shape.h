@@ -274,6 +274,7 @@ inline void draw_vector_with_dc(std::shared_ptr<wxClientDC> DC, std::vector<Shap
 			DC->DrawLine(shape[0].x, shape[0].y, shape[1].x, shape[1].y);
 			break;
 		case CURVE_LINE:
+
 			DC->SetPen(wxPen(shape.GetLine(), 3));
 			DC->DrawSpline(shape[0].x, shape[0].y, shape[2].x, shape[2].y, shape[1].x, shape[1].y);
 			break;

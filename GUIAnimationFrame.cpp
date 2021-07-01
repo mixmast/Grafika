@@ -16,13 +16,13 @@ void GUIAnimationFrame::m_stop_button_clicked( wxCommandEvent& event )
 
 void GUIAnimationFrame::m_start_button_clicked(wxCommandEvent& event)
 {
-	//tempo wyswietlania klatek ustawiam na 5fps
+	//tempo wyswietlania klatek ustawiam na 10fps
 
 	m_timer.set_length(m_amount_of_frames);
 	m_timer.start(100 / m_animation_speed);
 }
 
-void GUIAnimationFrame::m_restatr_button_clicked( wxCommandEvent& event )
+void GUIAnimationFrame::m_restatr_button_clicked(wxCommandEvent& event)
 {
 	m_timer.set_cycle(1);
 	load_frame(1);
@@ -57,7 +57,7 @@ void GUIAnimationFrame::m_speed_slider_changed(wxScrollEvent& event)
 
 	std::string speed_text = std::to_string(m_animation_speed);
 	speed_text.resize(3);
-	
+
 	m_animation_speed_textxtctr->SetValue(speed_text);
 }
 
@@ -119,28 +119,6 @@ void GUIAnimationFrame::load_frame(int number_of_frame)
 	file.close();
 }
 
-void GUIAnimationFrame::correct_brightness(wxImage& image_to_change)
-{
-
-	image_to_change = image_to_change.Copy();
-	int data_length = 3 * image_to_change.GetHeight() * image_to_change.GetWidth();
-	int current = 0;
-	unsigned char* image_data = image_to_change.GetData();
-
-	for (int i = 0; i < data_length; ++i) {
-		current = image_data[i] + m_frame_brightness;
-		if (current < 0)
-			image_data[i] = 0;
-		else if (current > 255)
-			image_data[i] = 255;
-		else
-			image_data[i] = current;
-	}
-	m_background_bitmap = wxBitmap(image_to_change);
-}
-
-
-
 void GUIAnimationFrame::MyTimer::stop() 
 {
 	wxTimer::Stop();
@@ -166,13 +144,37 @@ void GUIAnimationFrame::paint_frame()
 	draw_vector_with_dc(DC, m_shapes);
 }
 
-GUIAnimationFrame::MyTimer::MyTimer(GUIAnimationFrame* animation_frame) : wxTimer(), m_animation_panel(animation_frame) { }
+GUIAnimationFrame::MyTimer::MyTimer(GUIAnimationFrame* animation_frame) : wxTimer(), m_animation_panel(animation_frame) 
+{
+ 
+}
+
+void GUIAnimationFrame::correct_brightness(wxImage& image_to_change)
+{
+
+	image_to_change = image_to_change.Copy();
+	int data_length = 3 * image_to_change.GetHeight() * image_to_change.GetWidth();
+	int current = 0;
+	unsigned char* image_data = image_to_change.GetData();
+
+	for (int i = 0; i < data_length; ++i) {
+		current = image_data[i] + m_frame_brightness;
+		if (current < 0)
+			image_data[i] = 0;
+		else if (current > 255)
+			image_data[i] = 255;
+		else
+			image_data[i] = current;
+	}
+	m_background_bitmap = wxBitmap(image_to_change);
+}
 
 void GUIAnimationFrame::MyTimer::start(int milisec) 
 {
 	wxTimer::Start(milisec);
 }
 
-void GUIAnimationFrame::MyTimer::set_cycle(int cyc) {
+void GUIAnimationFrame::MyTimer::set_cycle(int cyc) 
+{
 	m_cycle = cyc;
 }

@@ -29,7 +29,7 @@ MyFrame1::MyFrame1( wxWindow* parent, wxWindowID id, const wxString& title, cons
 	m_undo_button = new wxButton( this, wxID_ANY, wxT("Cofnij"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_undo_button, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM|wxEXPAND, 5 );
 
-	m_display_animation_button = new wxButton( this, wxID_ANY, wxT("Wyświetl"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_display_animation_button = new wxButton( this, wxID_ANY, wxT("Wyswietl"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_display_animation_button, 0, wxALIGN_CENTER_HORIZONTAL|wxBOTTOM|wxEXPAND, 5 );
 
 	m_filePicker = new wxFilePickerCtrl( this, wxID_ANY, wxEmptyString, wxT("Wybierz plik z tlem"), wxT("*.png; *.jpg;"), wxDefaultPosition, wxDefaultSize, wxFLP_OPEN );

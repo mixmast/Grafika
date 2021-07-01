@@ -73,6 +73,8 @@ class GUIAnimationFrame : public AnimationFrame
 		void paint_frame();
 
 
+
+
 };
 
 #endif // __GUIAnimationFrame__
