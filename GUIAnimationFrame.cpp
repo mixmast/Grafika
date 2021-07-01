@@ -17,6 +17,7 @@ void GUIAnimationFrame::m_stop_button_clicked( wxCommandEvent& event )
 void GUIAnimationFrame::m_start_button_clicked( wxCommandEvent& event )
 {
 	//tempo wyswietlania klatek ustawiam na 5fps
+
 	m_timer.set_length(m_amount_of_frames);
 	m_timer.start(200 / m_animation_speed);
 }
@@ -41,6 +42,10 @@ void GUIAnimationFrame::m_new_animation_file_selected( wxFileDirPickerEvent& eve
 void GUIAnimationFrame::m_speed_slider_changed( wxScrollEvent& event )
 {
 	m_animation_speed = m_slider2->GetValue() / 100.0;
+	if (m_timer.IsRunning()) {
+		m_timer.stop();
+		m_timer.start(200 / m_animation_speed);
+	}
 }
 
 void GUIAnimationFrame::load_frame(int number_of_frame) {
